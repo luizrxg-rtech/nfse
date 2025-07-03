@@ -27,7 +27,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero-gradient city-background relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="relative px-4 sm:px-6 lg:px-8 py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="text-white space-y-10">
               <div className="space-y-6">
@@ -121,7 +121,7 @@ export default function Home() {
 
       {/* Services Grid */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* DES-IF */}
             <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-blue">

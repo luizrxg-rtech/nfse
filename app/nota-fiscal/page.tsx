@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import Sidebar from "@/components/Sidebar";
 
 export default function NotaFiscal() {
   const router = useRouter();
@@ -130,37 +131,14 @@ export default function NotaFiscal() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Header */}
       <Header />
 
       <div className="flex min-h-screen">
-        {/* Sidebar */}
-        <div className="p-8">
-          <aside className="w-80 glass-card rounded-3xl">
-            <div className="p-6 border-b border-gray-200/50">
-              <div className="flex items-center space-x-3 text-gray-700">
-                <Building className="w-6 h-6" />
-                <div className="text-sm">
-                  <div className="font-bold text-lg">RC TECH & SYSTEMS</div>
-                </div>
-              </div>
-            </div>
-            
-            <nav className="p-4">
-              <button
-                onClick={() => router.push('/dashboard')}
-                className="w-full flex items-center space-x-4 px-4 py-3 rounded-2xl text-gray-700 hover:bg-gray-100/80 transition-all duration-300"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium">Voltar ao Dashboard</span>
-              </button>
-            </nav>
-          </aside>
-        </div>
+        <Sidebar />
 
         {/* Main Content */}
         <main className="flex-1 p-8 pl-0">
-          <div className="max-w-6xl mx-auto">
+          <div>
             {/* Header Info */}
             <div className="mb-10">
               <div className="flex items-center justify-between">
@@ -180,12 +158,12 @@ export default function NotaFiscal() {
 
             {/* Steps Navigation */}
             <div className="mb-12">
-              <div className="flex items-center justify-center space-x-4 overflow-x-auto">
+              <div className="flex items-center">
                 {steps.map((step, index) => (
                   <div key={step.id} className="flex items-center">
                     <button
                       onClick={() => handleStepClick(step.id)}
-                      className={`flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 ${
+                      className={`flex items-center justify-center w-12 h-12 min-w-12 min-h-12 rounded-full transition-all duration-300 ${
                         step.id === currentStep
                           ? 'bg-gradient-to-br from-primary-600 to-primary-700 text-white scale-110'
                           : step.id < currentStep
@@ -201,7 +179,7 @@ export default function NotaFiscal() {
                       {step.title}
                     </span>
                     {index < steps.length - 1 && (
-                      <div className="w-12 h-px bg-gray-300 mx-6" />
+                      <div className="w-full h-px bg-gray-300 mx-6" />
                     )}
                   </div>
                 ))}

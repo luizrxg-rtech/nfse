@@ -1,224 +1,23 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { 
-  FileText, 
-  Settings, 
-  User, 
-  Search, 
-  X, 
-  Building, 
-  PlusCircle,
-  Edit3,
-  Ban,
-  Send,
-  Users,
-  FileSearch,
-  LogOut,
-  List,
-  AlertCircle,
-  Calculator,
-  BarChart3,
-  Home,
-  ChevronDown
-} from 'lucide-react';
+import {useRouter} from 'next/navigation';
+import {Button} from '@/components/ui/button';
+import {Card, CardContent} from '@/components/ui/card';
+import {Ban, Building, Edit3, FileSearch, FileText, LogOut, PlusCircle, Send} from 'lucide-react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import Sidebar from "@/components/Sidebar";
 
 export default function Dashboard() {
   const router = useRouter();
-  const [selectedMenuItem, setSelectedMenuItem] = useState('tela-inicial');
-  const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
-
-  const toggleMenu = (menuId: string) => {
-    setExpandedMenus(prev => 
-      prev.includes(menuId) 
-        ? prev.filter(id => id !== menuId)
-        : [...prev, menuId]
-    );
-  };
-
-  const menuItems = [
-    { id: 'tela-inicial', label: 'Tela Inicial', icon: Home },
-    { 
-      id: 'nota-fiscal', 
-      label: 'Nota Fiscal', 
-      icon: FileText,
-      submenu: [
-        { id: 'emitir', label: 'Emitir' },
-        { id: 'cancelar', label: 'Cancelar' },
-        { id: 'reemitir', label: 'Reemitir' },
-        { id: 'guia-fiscal', label: 'Guia Fiscal' }
-      ]
-    },
-    { 
-      id: 'nota-cancelada', 
-      label: 'Nota Cancelada', 
-      icon: Ban,
-      submenu: [
-        { id: 'consultar-cancelada', label: 'Consultar' },
-        { id: 'pendentes', label: 'Pendentes' }
-      ]
-    },
-    { id: 'consultar', label: 'Consultar', icon: Search },
-    { 
-      id: 'tomador', 
-      label: 'Tomador', 
-      icon: Users,
-      submenu: [
-        { id: 'cadastrar-tomador', label: 'Cadastrar' },
-        { id: 'cancelamentos', label: 'Cancelamentos' }
-      ]
-    },
-    { 
-      id: 'guia', 
-      label: 'Guia', 
-      icon: Calculator,
-      submenu: [
-        { id: 'gerar', label: 'Gerar' },
-        { id: 'consulta', label: 'Consulta' }
-      ]
-    },
-    { 
-      id: 'usuario-autorizacao', 
-      label: 'Usuário Autorização', 
-      icon: User,
-      submenu: [
-        { id: 'proprio', label: 'Próprio' },
-        { id: 'aceitar', label: 'Aceitar' },
-        { id: 'alterar', label: 'Alterar' },
-        { id: 'cancelar-enviada', label: 'Cancelar Enviada' },
-        { id: 'cancelar-recebida', label: 'Cancelar Recebida' }
-      ]
-    },
-    { 
-      id: 'configuracoes', 
-      label: 'Configurações', 
-      icon: Settings,
-      submenu: [
-        { id: 'personalizar', label: 'Personalizar' }
-      ]
-    },
-    { id: 'escrituracao', label: 'Escrituração', icon: FileText },
-    { 
-      id: 'relatorios', 
-      label: 'Relatórios', 
-      icon: BarChart3,
-      submenu: [
-        { id: 'prestados', label: 'Prestados' },
-        { id: 'guandos-final', label: 'Guandos (Final)' },
-        { id: 'tomados', label: 'Tomados' }
-      ]
-    },
-    { id: 'avisos', label: 'Avisos', icon: AlertCircle },
-    { 
-      id: 'regime-especial', 
-      label: 'Regime Especial', 
-      icon: List,
-      submenu: [
-        { id: 'notas-pendentes', label: 'Notas Pendentes' }
-      ]
-    },
-    { 
-      id: 'lote', 
-      label: 'Lote', 
-      icon: Send,
-      submenu: [
-        { id: 'enviar', label: 'Enviar' },
-        { id: 'consultar-lote', label: 'Consultar' }
-      ]
-    },
-  ];
-
-  const handleLogout = () => {
-    router.push('/');
-  };
-
-  const renderMenuItem = (item: any) => {
-    const Icon = item.icon;
-    const hasSubmenu = item.submenu && item.submenu.length > 0;
-    const isExpanded = expandedMenus.includes(item.id);
-
-    return (
-      <div key={item.id} className="mb-2">
-        <div
-          onClick={() => hasSubmenu && toggleMenu(item.id)}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 ${
-            selectedMenuItem === item.id
-              ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white'
-              : 'text-gray-700 hover:bg-gray-100/80'
-          } ${hasSubmenu ? 'cursor-pointer' : ''}`}
-        >
-          <div className="flex items-center space-x-4">
-            <Icon className="w-5 h-5" />
-            <span className="text-sm font-medium">{item.label}</span>
-          </div>
-          {hasSubmenu && (
-            <div className="ml-auto">
-              <ChevronDown 
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  isExpanded ? 'rotate-180' : 'rotate-0'
-                }`} 
-              />
-            </div>
-          )}
-        </div>
-        
-        {hasSubmenu && isExpanded && (
-          <div className="ml-6 mt-2 space-y-1">
-            {item.submenu.map((subItem: any) => (
-              <div
-                key={subItem.id}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-all duration-200 cursor-pointer"
-              >
-                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                <span className="text-sm">{subItem.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Header */}
       <Header />
 
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <div className="p-8">
-          <aside className="w-80 glass-card rounded-3xl">
-            <div className="p-6 border-b border-gray-200/50">
-              <div className="flex items-center space-x-3 text-gray-700">
-                <Building className="w-6 h-6" />
-                <div className="text-sm">
-                  <div className="font-bold text-lg">RC TECH & SYSTEMS</div>
-                </div>
-              </div>
-            </div>
-            
-            <nav className="p-4">
-              {menuItems.map(renderMenuItem)}
-            </nav>
-
-            <div className="p-6 border-t border-gray-200/50 mt-auto">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleLogout}
-                className="w-full rounded-2xl hover:bg-red-50 hover:text-red-600 transition-colors"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sair
-              </Button>
-            </div>
-          </aside>
-        </div>
+        <Sidebar />
 
         {/* Main Content */}
         <main className="flex-1 p-8 pl-0">

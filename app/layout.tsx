@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Udigital - Nota Fiscal de Serviços | Prefeitura de Tupaciguara',
+  title: 'NFSE | Prefeitura de Tupaciguara',
   description: 'Portal de Notas Fiscais da Prefeitura de Tupaciguara. Emita, consulte e gerencie suas notas fiscais de serviços.',
 };
 
