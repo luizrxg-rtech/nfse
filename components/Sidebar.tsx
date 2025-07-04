@@ -143,7 +143,7 @@ const Item = (
         onClick={() => hasSubmenu && toggleMenu(item.id)}
         className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 ${
           selectedItem === item.id
-            ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white'
+            ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white text'
             : 'text-gray-700 hover:bg-gray-100/80'
         } ${hasSubmenu ? 'cursor-pointer' : ''}`}
       >
