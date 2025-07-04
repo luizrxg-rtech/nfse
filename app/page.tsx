@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen">
       {/* Header */}
       <Header />
 
@@ -44,7 +44,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-6">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 rounded-full px-8 py-4 font-semibold"
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 px-8 py-4 font-semibold"
                   onClick={() => router.push('/dashboard')}
                 >
                   <Settings className="w-5 h-5 mr-3" />
@@ -71,7 +71,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Certificate Login */}
             <Card 
-              className="glass-card transition-all duration-300 cursor-pointer border-0 rounded-3xl group card-glow-blue" 
+              className="bg-white transition-all duration-300 cursor-pointer border-0 group card-glow-blue" 
               onClick={() => handleLogin('certificate')}
             >
               <CardContent className="p-8 text-center space-y-6">
@@ -87,7 +87,7 @@ export default function Home() {
 
             {/* Gov.br Login */}
             <Card 
-              className="glass-card transition-all duration-300 cursor-pointer border-0 rounded-3xl group card-glow-blue" 
+              className="bg-white transition-all duration-300 cursor-pointer border-0 group card-glow-blue" 
               onClick={() => handleLogin('gov')}
             >
               <CardContent className="p-8 text-center space-y-6">
@@ -97,17 +97,17 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 text-lg">CPF entre com</h3>
+                  <h3 className="font-bold text-gray-900 text-lg">Entre com CPF</h3>
                   <p className="text-sm text-gray-600 mt-2 font-medium">gov.br</p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Previous Version */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-yellow">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-amber">
               <CardContent className="p-8 text-center space-y-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-3xl flex items-center justify-center mx-auto transition-transform duration-300">
-                  <Shield className="w-10 h-10 text-yellow-700" />
+                <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 rounded-3xl flex items-center justify-center mx-auto transition-transform duration-300">
+                  <Shield className="w-10 h-10 text-amber-700" />
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 text-lg">Acesse a versão anterior</h3>
@@ -120,11 +120,11 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-gray-100">
+      <section className="py-20">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* DES-IF */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-blue">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-blue">
               <CardContent className="p-8 space-y-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                   <FileText className="w-8 h-8 text-blue-700" />
@@ -134,7 +134,7 @@ export default function Home() {
             </Card>
 
             {/* Relatório de NFs Pagas */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-green">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-amber">
               <CardContent className="p-8 space-y-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                   <FileText className="w-8 h-8 text-green-700" />
@@ -144,7 +144,7 @@ export default function Home() {
             </Card>
 
             {/* Documentação RPS */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-purple">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-purple">
               <CardContent className="p-8 space-y-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                   <Download className="w-8 h-8 text-purple-700" />
@@ -154,7 +154,7 @@ export default function Home() {
             </Card>
 
             {/* Escrituração */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-orange">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-orange">
               <CardContent className="p-8 space-y-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                   <FileText className="w-8 h-8 text-orange-700" />
@@ -164,7 +164,7 @@ export default function Home() {
             </Card>
 
             {/* NFS-e Avulsa */}
-            <Card className="glass-card transition-all duration-300 border-0 rounded-3xl group card-glow-red">
+            <Card className="bg-white transition-all duration-300 border-0 rounded-3xl group card-glow-red">
               <CardContent className="p-8 space-y-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                   <AlertCircle className="w-8 h-8 text-red-700" />
@@ -181,7 +181,7 @@ export default function Home() {
       {/* Loading Overlay */}
       {isLoggingIn && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="glass-card p-12 rounded-3xl text-center">
+          <div className="bg-white p-12 rounded-3xl text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary-600 mx-auto mb-6"></div>
             <p className="text-gray-700 font-semibold text-lg">Autenticando...</p>
           </div>

@@ -1,4 +1,5 @@
-import { FileText } from 'lucide-react';
+import Image from "next/image";
+import {MapPin} from "lucide-react";
 
 export default function Footer() {
   return (
@@ -7,32 +8,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <FileText className="w-7 h-7 text-primary-700" />
-              </div>
+              <Image
+                alt="Logo"
+                src="/logo.jpg"
+                width={48}
+                height={48}
+                className="rounded-full"
+              />
               <div className="text-sm">
-                <div className="font-bold text-lg">NFSE</div>
-                <div className="text-xs text-green-200">PROCESSAMENTO DE DADOS DE TUPACIGUARA</div>
+                <div className="font-bold text-lg">PREFEITURA DE TUPACIGUARA</div>
               </div>
             </div>
           </div>
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <div className="w-8 h-8 bg-gradient-to-br from-green-600 to-green-700 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">TP</span>
-                </div>
-              </div>
-              <div className="text-sm">
-                <div className="font-bold text-lg">PREFEITURA DE</div>
-                <div className="font-bold text-lg">TUPACIGUARA</div>
-              </div>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary-600 to-primary-700 rounded-full"></div>
+                <MapPin className="w-8 h-8 text-green-700"/>
               </div>
               <div className="text-sm">
                 <div className="font-bold text-lg">Prefeitura Municipal de Tupaciguara</div>
