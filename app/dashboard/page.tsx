@@ -29,10 +29,10 @@ export default function Dashboard() {
                   <span>105 COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Button variant="ghost" size="sm" className="rounded-2xl">
+                  <Button variant="translucid" size="sm" className="rounded-full">
                     Selecionar Outra Empresa
                   </Button>
-                  <Button variant="ghost" size="sm" className="rounded-2xl">
+                  <Button variant="translucid" size="sm" className="rounded-full">
                     Login Certificado
                   </Button>
                 </div>

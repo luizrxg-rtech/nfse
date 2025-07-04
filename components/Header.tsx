@@ -7,7 +7,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-full flex items-center justify-center">
                 <FileText className="w-7 h-7 text-white" />
               </div>
               <div className="text-sm text-primary-800">

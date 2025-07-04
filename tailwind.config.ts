@@ -1,16 +1,31 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+        'hero-gradient': 'linear-gradient(135deg, #06403b 0%, #0a5d54 50%, #0e7a6d 100%)',
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+        '4xl': '2rem',
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -78,45 +93,29 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         chart: {
-          1: 'hsl(var(--chart-1))',
-          2: 'hsl(var(--chart-2))',
-          3: 'hsl(var(--chart-3))',
-          4: 'hsl(var(--chart-4))',
-          5: 'hsl(var(--chart-5))',
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
         },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        xl: 'var(--radius-xl)',
-        '2xl': 'var(--radius-2xl)',
-        '3xl': 'var(--radius-3xl)',
-        '4xl': 'var(--radius-4xl)',
-      },
-      backdropBlur: {
-        xs: 'var(--backdrop-blur-xs)',
-        sm: 'var(--backdrop-blur-sm)',
-        md: 'var(--backdrop-blur-md)',
-        lg: 'var(--backdrop-blur-lg)',
-        xl: 'var(--backdrop-blur-xl)',
-        '2xl': 'var(--backdrop-blur-2xl)',
-        '3xl': 'var(--backdrop-blur-3xl)',
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'float': 'float 3s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
         },
         'float': {
           '0%, 100%': { transform: 'translateY(0px)' },
@@ -127,23 +126,17 @@ const config: Config = {
           '50%': { boxShadow: '0 0 30px rgba(6, 64, 59, 0.5)' },
         },
       },
-      transitionDuration: {
-        '75': '75ms',
-        '100': '100ms',
-        '150': '150ms',
-        '200': '200ms',
-        '300': '300ms',
-        '500': '500ms',
-        '700': '700ms',
-        '1000': '1000ms',
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'float': 'float 3s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+      },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('tailwindcss-animate'),
-  ],
-}
-
-export default config
+  plugins: [require('tailwindcss-animate')],
+};
+export default config;

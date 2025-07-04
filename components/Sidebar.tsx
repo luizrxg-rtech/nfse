@@ -3,7 +3,7 @@ import {
   Ban,
   BarChart3, Building,
   Calculator,
-  ChevronDown,
+  ChevronDown, ChevronRight,
   FileText,
   Home, List, LogOut, LucideIcon,
   Search, Send,
@@ -141,10 +141,10 @@ const Item = (
     <div key={item.id} className="mb-2">
       <div
         onClick={() => hasSubmenu && toggleMenu(item.id)}
-        className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 ${
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-full transition-all duration-300 ${
           selectedItem === item.id
             ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white text'
-            : 'text-gray-700 hover:bg-gray-100/80'
+            : 'text-gray-700 hover:bg-primary-100/90 hover:text-accent'
         } ${hasSubmenu ? 'cursor-pointer' : ''}`}
       >
         <div className="flex items-center space-x-4">
@@ -167,9 +167,9 @@ const Item = (
           {item.submenus!!.map((subItem: any) => (
             <div
               key={subItem.id}
-              className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-all duration-200 cursor-pointer"
+              className="flex items-center space-x-3 px-4 py-2 rounded-full text-gray-700 hover:bg-primary-100/90 hover:text-accent transition-all duration-200 cursor-pointer"
             >
-              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+              <ChevronRight className="w-4 h-4"/>
               <span className="text-sm">{subItem.label}</span>
             </div>
           ))}
@@ -210,7 +210,7 @@ export default function Sidebar() {
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="w-full rounded-2xl hover:bg-red-50 hover:text-red-600 transition-colors"
+            className="w-full rounded-full hover:bg-red-50 hover:text-red-600 transition-colors"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sair

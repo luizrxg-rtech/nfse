@@ -146,10 +146,10 @@ export default function NotaFiscal() {
                   <span>105 COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Button variant="ghost" size="sm" className="rounded-2xl">
+                  <Button variant="translucid" size="sm" className="rounded-full">
                     Selecionar Outra Empresa
                   </Button>
-                  <Button variant="ghost" size="sm" className="rounded-2xl">
+                  <Button variant="translucid" size="sm" className="rounded-full">
                     Login Certificado
                   </Button>
                 </div>
@@ -158,28 +158,28 @@ export default function NotaFiscal() {
 
             {/* Steps Navigation */}
             <div className="mb-12">
-              <div className="flex items-center">
+              <div className="flex items-center justify-center w-full">
                 {steps.map((step, index) => (
                   <div key={step.id} className="flex items-center">
                     <button
                       onClick={() => handleStepClick(step.id)}
-                      className={`flex items-center justify-center w-12 h-12 min-w-12 min-h-12 rounded-full transition-all duration-300 ${
+                      className={`flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] rounded-full transition-all duration-300 ${
                         step.id === currentStep
                           ? 'bg-gradient-to-br from-primary-600 to-primary-700 text-white scale-110'
                           : step.id < currentStep
-                          ? 'bg-gradient-to-br from-primary-200 to-primary-300 text-primary-800'
+                          ? 'bg-gradient-to-br from-primary-200 to-primary-300 text-primary-700'
                           : 'bg-gray-200 text-gray-500'
                       }`}
                     >
                       {step.id}
                     </button>
-                    <span className={`ml-3 text-sm font-semibold ${
+                    <span className={`ml-3 whitespace-nowrap text-sm font-semibold ${
                       step.id === currentStep ? 'text-primary-700' : 'text-gray-500'
                     }`}>
                       {step.title}
                     </span>
                     {index < steps.length - 1 && (
-                      <div className="w-full h-px bg-gray-300 mx-6" />
+                      <div className="w-10 h-px bg-gray-300 mx-6" />
                     )}
                   </div>
                 ))}
@@ -199,7 +199,7 @@ export default function NotaFiscal() {
                 variant="ghost"
                 onClick={handleBack}
                 disabled={currentStep === 1}
-                className="flex items-center space-x-3 px-8 py-3 rounded-2xl"
+                className="flex items-center space-x-3 px-8 py-3 rounded-full"
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span>Voltar</span>
@@ -207,7 +207,7 @@ export default function NotaFiscal() {
               <Button
                 onClick={handleNext}
                 disabled={currentStep === steps.length}
-                className="flex items-center space-x-3 px-8 py-3 rounded-2xl bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800"
+                className="flex items-center space-x-3 px-8 py-3 rounded-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800"
               >
                 <span>Avançar</span>
                 <ArrowRight className="w-5 h-5" />
@@ -225,7 +225,7 @@ export default function NotaFiscal() {
 function TomadorStep({ formData, handleInputChange }: { formData: any, handleInputChange: (field: string, value: string) => void }) {
   return (
     <div className="space-y-8">
-      <div>
+      <div className="space-y-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 gradient-text">Tomador de serviços</h2>
         
         {/* Tipo de Pessoa */}
@@ -278,7 +278,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
             value={formData.cnpj}
             onChange={(e) => handleInputChange('cnpj', e.target.value)}
             placeholder="00.000.000/0000-00"
-            className="rounded-2xl h-12"
+            className="rounded-full h-12"
           />
         </div>
 
@@ -290,7 +290,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
             value={formData.nomeRazaoSocial}
             onChange={(e) => handleInputChange('nomeRazaoSocial', e.target.value)}
             placeholder="Digite o nome ou razão social"
-            className="rounded-2xl h-12"
+            className="rounded-full h-12"
           />
         </div>
 
@@ -322,9 +322,9 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.cep}
               onChange={(e) => handleInputChange('cep', e.target.value)}
               placeholder="00000-000"
-              className="flex-1 rounded-2xl h-12"
+              className="flex-1 rounded-full h-12"
             />
-            <Button variant="ghost" size="sm" className="rounded-2xl px-6">
+            <Button variant="ghost" size="sm" className="rounded-full px-6">
               Buscar
             </Button>
           </div>
@@ -339,7 +339,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.logradouro}
               onChange={(e) => handleInputChange('logradouro', e.target.value)}
               placeholder="Digite o logradouro"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
           <div className="space-y-3">
@@ -349,7 +349,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.numero}
               onChange={(e) => handleInputChange('numero', e.target.value)}
               placeholder="Digite o número"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
         </div>
@@ -363,7 +363,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.complemento}
               onChange={(e) => handleInputChange('complemento', e.target.value)}
               placeholder="Digite o complemento"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
           <div className="space-y-3">
@@ -373,7 +373,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.bairro}
               onChange={(e) => handleInputChange('bairro', e.target.value)}
               placeholder="Digite o bairro"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
         </div>
@@ -387,7 +387,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.municipio}
               onChange={(e) => handleInputChange('municipio', e.target.value)}
               placeholder="Digite o município"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
           <div className="space-y-3">
@@ -397,7 +397,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.estado}
               onChange={(e) => handleInputChange('estado', e.target.value)}
               placeholder="Digite o estado"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
         </div>
@@ -413,7 +413,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.telefone}
                 onChange={(e) => handleInputChange('telefone', e.target.value)}
                 placeholder="(00) 00000-0000"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -424,7 +424,7 @@ function TomadorStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="exemplo@email.com"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
           </div>
@@ -448,7 +448,7 @@ function IntermediarioStep() {
 function ServicosStep({ formData, handleInputChange }: { formData: any, handleInputChange: (field: string, value: string) => void }) {
   return (
     <div className="space-y-8">
-      <div>
+      <div className="space-y-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 gradient-text">Valor</h2>
         
         {/* Valor Serviço */}
@@ -459,7 +459,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             value={formData.valorServico}
             onChange={(e) => handleInputChange('valorServico', e.target.value)}
             placeholder="R$ 4.000,00"
-            className="rounded-2xl h-12"
+            className="rounded-full h-12"
           />
         </div>
 
@@ -470,7 +470,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
           <div className="space-y-3">
             <Label htmlFor="codigo-tributacao" className="font-medium">Código de Tributação Municipal:*</Label>
             <Select value={formData.codigoTributacao} onValueChange={(value) => handleInputChange('codigoTributacao', value)}>
-              <SelectTrigger className="rounded-2xl h-12">
+              <SelectTrigger className="rounded-full h-12">
                 <SelectValue placeholder="951190000 - REPARAÇÃO E MANUTENÇÃO DE COMPUTADORES E DE EQUIPA" />
               </SelectTrigger>
               <SelectContent>
@@ -485,7 +485,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
               id="codigo-cnae"
               value="951190000"
               readOnly
-              className="bg-gray-50 rounded-2xl h-12"
+              className="bg-gray-50 rounded-full h-12"
             />
           </div>
 
@@ -495,7 +495,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
               id="lista-servico"
               value="14.01 - LUBRIFICAÇÃO, LIMPEZA, LUSTRAÇÃO, REVISÃO, CARGA E RECARGA, CONSERTO, RE."
               readOnly
-              className="bg-gray-50 rounded-2xl h-12"
+              className="bg-gray-50 rounded-full h-12"
             />
           </div>
         </div>
@@ -508,7 +508,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             <div className="space-y-3">
               <Label htmlFor="natureza-operacao" className="font-medium">Natureza da Operação:*</Label>
               <Select value={formData.naturezaOperacao} onValueChange={(value) => handleInputChange('naturezaOperacao', value)}>
-                <SelectTrigger className="rounded-2xl h-12">
+                <SelectTrigger className="rounded-full h-12">
                   <SelectValue placeholder="Incidente" />
                 </SelectTrigger>
                 <SelectContent>
@@ -519,7 +519,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             <div className="space-y-3">
               <Label htmlFor="regime-especial" className="font-medium">Regime Especial Tributação:</Label>
               <Select value={formData.regimeEspecial} onValueChange={(value) => handleInputChange('regimeEspecial', value)}>
-                <SelectTrigger className="rounded-2xl h-12">
+                <SelectTrigger className="rounded-full h-12">
                   <SelectValue placeholder="Microempresa ou Empresa de Pequeno Port..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -538,7 +538,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             <div className="space-y-3">
               <Label htmlFor="local-prestacao" className="font-medium">Local da Prestação:*</Label>
               <Select value={formData.localPrestacao} onValueChange={(value) => handleInputChange('localPrestacao', value)}>
-                <SelectTrigger className="rounded-2xl h-12">
+                <SelectTrigger className="rounded-full h-12">
                   <SelectValue placeholder="TUPACIGUARA - MG" />
                 </SelectTrigger>
                 <SelectContent>
@@ -553,7 +553,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
                 value={formData.aliquota}
                 onChange={(e) => handleInputChange('aliquota', e.target.value)}
                 placeholder="2"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
           </div>
@@ -571,7 +571,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             value={formData.discriminacao}
             onChange={(e) => handleInputChange('discriminacao', e.target.value)}
             placeholder="Digite a discriminação dos serviços"
-            className="min-h-[120px] rounded-2xl"
+            className="min-h-[120px] rounded-full"
           />
         </div>
 
@@ -583,7 +583,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
             value={formData.descricao}
             onChange={(e) => handleInputChange('descricao', e.target.value)}
             placeholder="Digite a descrição"
-            className="min-h-[100px] rounded-2xl"
+            className="min-h-[100px] rounded-full"
           />
         </div>
 
@@ -591,7 +591,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
         <div className="space-y-3">
           <Label htmlFor="tributavel" className="text-lg font-semibold">Tributável:</Label>
           <Select value={formData.tributavel} onValueChange={(value) => handleInputChange('tributavel', value)}>
-            <SelectTrigger className="rounded-2xl h-12">
+            <SelectTrigger className="rounded-full h-12">
               <SelectValue placeholder="SIM" />
             </SelectTrigger>
             <SelectContent>
@@ -611,7 +611,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
                 value={formData.quantidade}
                 onChange={(e) => handleInputChange('quantidade', e.target.value)}
                 placeholder="1"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -621,7 +621,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
                 value={formData.valorUnitario}
                 onChange={(e) => handleInputChange('valorUnitario', e.target.value)}
                 placeholder="R$ 4.000,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -631,16 +631,16 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
                 value={formData.valorTotal}
                 onChange={(e) => handleInputChange('valorTotal', e.target.value)}
                 placeholder="R$ 4.000,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
           </div>
           
           <div className="flex space-x-4">
-            <Button variant="ghost" size="sm" className="rounded-2xl">
+            <Button variant="ghost" size="sm" className="rounded-full">
               Limpar
             </Button>
-            <Button size="sm" className="rounded-2xl bg-gradient-to-r from-primary-600 to-primary-700">
+            <Button size="sm" className="rounded-full bg-gradient-to-r from-primary-600 to-primary-700">
               Inserir
             </Button>
           </div>
@@ -648,8 +648,8 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
 
         {/* Tabela de Serviços */}
         <div className="space-y-6">
-          <Card className="glass-card border-0 rounded-3xl">
-            <CardContent className="p-6">
+          <Card className="glass-card border-0 rounded-3xl overflow-hidden">
+            <CardContent className="">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -698,7 +698,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
               id="valor-servico-total"
               value="R$ 4.000,00"
               readOnly
-              className="bg-gray-50 rounded-2xl h-12"
+              className="bg-gray-50 rounded-full h-12"
             />
           </div>
           <div className="space-y-3">
@@ -707,7 +707,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
               id="sub-total"
               value="R$ 4.000,00"
               readOnly
-              className="bg-gray-50 rounded-2xl h-12"
+              className="bg-gray-50 rounded-full h-12"
             />
           </div>
         </div>
@@ -719,7 +719,7 @@ function ServicosStep({ formData, handleInputChange }: { formData: any, handleIn
 function ValoresStep({ formData, handleInputChange }: { formData: any, handleInputChange: (field: string, value: string) => void }) {
   return (
     <div className="space-y-8">
-      <div>
+      <div className="space-y-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 gradient-text">Valores</h2>
         
         {/* Valor Serviço */}
@@ -730,7 +730,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
             value={formData.valorServico}
             onChange={(e) => handleInputChange('valorServico', e.target.value)}
             placeholder="R$ 4.000,00"
-            className="rounded-2xl h-12"
+            className="rounded-full h-12"
           />
         </div>
 
@@ -743,7 +743,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
               value={formData.iss}
               onChange={(e) => handleInputChange('iss', e.target.value)}
               placeholder="R$ 0,00"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
           <div className="space-y-6">
@@ -777,7 +777,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.pis}
                 onChange={(e) => handleInputChange('pis', e.target.value)}
                 placeholder="R$ 0,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -787,7 +787,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.cofins}
                 onChange={(e) => handleInputChange('cofins', e.target.value)}
                 placeholder="R$ 0,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -797,7 +797,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.ir}
                 onChange={(e) => handleInputChange('ir', e.target.value)}
                 placeholder="R$ 0,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
           </div>
@@ -810,7 +810,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.csll}
                 onChange={(e) => handleInputChange('csll', e.target.value)}
                 placeholder="R$ 0,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-3">
@@ -820,7 +820,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
                 value={formData.inss}
                 onChange={(e) => handleInputChange('inss', e.target.value)}
                 placeholder="R$ 0,00"
-                className="rounded-2xl h-12"
+                className="rounded-full h-12"
               />
             </div>
           </div>
@@ -834,7 +834,7 @@ function ValoresStep({ formData, handleInputChange }: { formData: any, handleInp
             value={formData.outrasInformacoes}
             onChange={(e) => handleInputChange('outrasInformacoes', e.target.value)}
             placeholder="Digite outras informações relevantes"
-            className="min-h-[120px] rounded-2xl"
+            className="min-h-[120px] rounded-full"
           />
         </div>
       </div>
@@ -856,7 +856,7 @@ function EventosStep() {
 function ContaCivilStep({ formData, handleInputChange }: { formData: any, handleInputChange: (field: string, value: string) => void }) {
   return (
     <div className="space-y-8">
-      <div>
+      <div className="space-y-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 gradient-text">Construção Civil</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -867,7 +867,7 @@ function ContaCivilStep({ formData, handleInputChange }: { formData: any, handle
               value={formData.artOuN}
               onChange={(e) => handleInputChange('artOuN', e.target.value)}
               placeholder="Digite o número"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
           <div className="space-y-3">
@@ -877,7 +877,7 @@ function ContaCivilStep({ formData, handleInputChange }: { formData: any, handle
               value={formData.codigoObra}
               onChange={(e) => handleInputChange('codigoObra', e.target.value)}
               placeholder="Digite o código"
-              className="rounded-2xl h-12"
+              className="rounded-full h-12"
             />
           </div>
         </div>
@@ -889,7 +889,7 @@ function ContaCivilStep({ formData, handleInputChange }: { formData: any, handle
             value={formData.deducoes}
             onChange={(e) => handleInputChange('deducoes', e.target.value)}
             placeholder="R$ 0,00"
-            className="rounded-2xl h-12"
+            className="rounded-full h-12"
           />
         </div>
       </div>
@@ -909,24 +909,9 @@ function GerarStep() {
           </p>
           
           <div className="flex justify-center space-x-6">
-            <Button 
-              variant="ghost" 
-              className="flex items-center space-x-3 px-8 py-3 rounded-2xl"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Voltar</span>
-            </Button>
             
             <Button 
-              variant="outline" 
-              className="flex items-center space-x-3 px-8 py-3 rounded-2xl border-primary-600 text-primary-600 hover:bg-primary-50"
-            >
-              <Eye className="w-5 h-5" />
-              <span>Visualizar</span>
-            </Button>
-            
-            <Button 
-              className="flex items-center space-x-3 px-8 py-3 rounded-2xl bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800"
+              className="flex items-center space-x-3 px-8 py-3 rounded-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800"
             >
               <FileText className="w-5 h-5" />
               <span>Gerar</span>
@@ -981,7 +966,7 @@ function GerarStep() {
                 </div>
               </div>
               
-              <div className="mt-8 p-6 bg-primary-50 rounded-2xl">
+              <div className="mt-8 p-6 bg-primary-50 rounded-full">
                 <h3 className="font-bold text-lg mb-4">DISCRIMINAÇÃO DOS SERVIÇOS</h3>
                 <p className="text-sm">
                   14.01 - LUBRIFICAÇÃO, LIMPEZA, LUSTRAÇÃO, REVISÃO, CARGA E RECARGA, CONSERTO, RESTAURAÇÃO, 
