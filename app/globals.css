@@ -20,17 +20,17 @@
   --color-ring: 172 100% 19%;
 
   /* Primary color palette */
-  --color-primary: 172 100% 19%;
+  --color-primary: 22 163 74;
   --color-primary-foreground: 0 0% 98%;
-  --color-primary-50: 240 249 255;
-  --color-primary-100: 219 234 254;
-  --color-primary-200: 191 219 254;
-  --color-primary-300: 147 197 253;
-  --color-primary-400: 96 165 250;
-  --color-primary-500: 22 196 94;
+  --color-primary-50: 240 253 244;
+  --color-primary-100: 220 252 231;
+  --color-primary-200: 187 247 208;
+  --color-primary-300: 134 239 172;
+  --color-primary-400: 74 222 128;
+  --color-primary-500: 34 197 94;
   --color-primary-600: 22 163 74;
   --color-primary-700: 21 128 61;
-  --color-primary-800: 6 64 59;
+  --color-primary-800: 22 101 52;
   --color-primary-900: 20 83 45;
   --color-primary-950: 5 46 22;
 
@@ -49,7 +49,7 @@
   --color-secondary-900: 15 23 42;
 
   /* Accent color palette */
-  --color-accent: 160 84% 39%;
+  --color-accent: 22 163 74;
   --color-accent-foreground: 0 0% 98%;
   --color-accent-50: 236 253 245;
   --color-accent-100: 209 250 229;
@@ -107,7 +107,7 @@
     --color-card-foreground: 213 31% 91%;
     --color-popover: 224 71% 4%;
     --color-popover-foreground: 213 31% 91%;
-    --color-primary: 172 100% 19%;
+    --color-primary: 34 197 94;
     --color-primary-foreground: 222 84% 5%;
     --color-secondary: 215 28% 17%;
     --color-secondary-foreground: 213 31% 91%;
@@ -119,7 +119,7 @@
     --color-destructive-foreground: 213 31% 91%;
     --color-border: 215 28% 17%;
     --color-input: 215 28% 17%;
-    --color-ring: 172 100% 19%;
+    --color-ring: 22 163 74;
     --color-chart-1: 220 70% 50%;
     --color-chart-2: 160 60% 45%;
     --color-chart-3: 30 80% 55%;
