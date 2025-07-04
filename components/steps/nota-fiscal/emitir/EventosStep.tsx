@@ -4,7 +4,6 @@ import {StepComponentProps} from "@/types/Stepper";
 export default function EventosStep({
   formData,
   handleInputChange,
-  id,
   className
 }: StepComponentProps) {
   return (
