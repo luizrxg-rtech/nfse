@@ -3,11 +3,11 @@ import {
   Ban,
   BarChart3,
   Building,
-  Calculator,
-  FileText,
+  Calculator, ChevronRight,
+  File, FileInput, FilePlus, FilePlus2, FileSearch, FileX, FileX2,
   Home,
   List,
-  LogOut,
+  LogOut, ScrollText,
   Search,
   Send,
   Settings,
@@ -16,30 +16,31 @@ import {
 } from 'lucide-react';
 import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {Item} from "@/types/MenuItem";
 import MenuItem from "@/components/MenuItem";
+import Image from "next/image";
 
 const menuItems: Item[] = [
-  { id: '/dashboard', label: 'Tela Inicial', icon: Home },
+  { id: '/dashboard', label: 'Dashboard', icon: Home },
   {
     id: '/nota-fiscal',
     label: 'Nota Fiscal',
-    icon: FileText,
+    icon: File,
     submenus: [
-      { id: '/emitir', label: 'Emitir' },
-      { id: '/cancelar', label: 'Cancelar' },
-      { id: '/reemitir', label: 'Reemitir' },
-      { id: '/guia-fiscal', label: 'Guia Fiscal' }
+      { id: '/emitir', label: 'Emitir', icon: FilePlus2 },
+      { id: '/cancelar', label: 'Cancelar', icon: FileX2 },
+      { id: '/reemitir', label: 'Reemitir', icon: FileInput },
+      { id: '/guia-fiscal', label: 'Guia Fiscal', icon: FileSearch }
     ]
   },
   {
     id: '/nota-cancelada',
     label: 'Nota Cancelada',
-    icon: Ban,
+    icon: FileX,
     submenus: [
-      { id: '/consultar-cancelada', label: 'Consultar' },
-      { id: '/pendentes', label: 'Pendentes' }
+      { id: '/consultar-cancelada', label: 'Consultar', icon: ChevronRight },
+      { id: '/pendentes', label: 'Pendentes', icon: ChevronRight }
     ]
   },
   { id: '/consultar', label: 'Consultar', icon: Search },
@@ -48,8 +49,8 @@ const menuItems: Item[] = [
     label: 'Tomador',
     icon: Users,
     submenus: [
-      { id: '/cadastrar-tomador', label: 'Cadastrar' },
-      { id: '/cancelamentos', label: 'Cancelamentos' }
+      { id: '/cadastrar-tomador', label: 'Cadastrar', icon: ChevronRight },
+      { id: '/cancelamentos', label: 'Cancelamentos', icon: ChevronRight }
     ]
   },
   {
@@ -57,20 +58,20 @@ const menuItems: Item[] = [
     label: 'Guia',
     icon: Calculator,
     submenus: [
-      { id: '/gerar', label: 'Gerar' },
-      { id: '/consulta', label: 'Consulta' }
+      { id: '/gerar', label: 'Gerar', icon: ChevronRight },
+      { id: '/consulta', label: 'Consulta', icon: ChevronRight }
     ]
   },
   {
     id: '/usuario-autorizacao',
-    label: 'Usuário Autorização',
+    label: 'Autorização de Usuário ',
     icon: User,
     submenus: [
-      { id: '/proprio', label: 'Próprio' },
-      { id: '/aceitar', label: 'Aceitar' },
-      { id: '/alterar', label: 'Alterar' },
-      { id: '/cancelar-enviada', label: 'Cancelar Enviada' },
-      { id: '/cancelar-recebida', label: 'Cancelar Recebida' }
+      { id: '/proprio', label: 'Propor', icon: ChevronRight},
+      { id: '/aceitar', label: 'Aceitar', icon: ChevronRight},
+      { id: '/alterar', label: 'Alterar', icon: ChevronRight},
+      { id: '/cancelar-enviada', label: 'Cancelar Enviada', icon: ChevronRight },
+      { id: '/cancelar-recebida', label: 'Cancelar Recebida', icon: ChevronRight }
     ]
   },
   {
@@ -78,18 +79,18 @@ const menuItems: Item[] = [
     label: 'Configurações',
     icon: Settings,
     submenus: [
-      { id: '/personalizar', label: 'Personalizar' }
+      { id: '/personalizar', label: 'Personalizar', icon: ChevronRight }
     ]
   },
-  { id: '/escrituracao', label: 'Escrituração', icon: FileText },
+  { id: '/escrituracao', label: 'Escrituração', icon: ScrollText },
   {
     id: '/relatorios',
     label: 'Relatórios',
     icon: BarChart3,
     submenus: [
-      { id: '/prestados', label: 'Prestados' },
-      { id: '/guandos-final', label: 'Guandos (Final)' },
-      { id: '/tomados', label: 'Tomados' }
+      { id: '/prestados', label: 'Prestados', icon: ChevronRight},
+      { id: '/guandos-final', label: 'Grandes', icon: ChevronRight},
+      { id: '/tomados', label: 'Tomados', icon: ChevronRight }
     ]
   },
   { id: '/avisos', label: 'Avisos', icon: AlertCircle },
@@ -98,7 +99,7 @@ const menuItems: Item[] = [
     label: 'Regime Especial',
     icon: List,
     submenus: [
-      { id: '/notas-pendentes', label: 'Notas Pendentes' }
+      { id: '/notas-pendentes', label: 'Notas Pendentes', icon: ChevronRight }
     ]
   },
   {
@@ -106,14 +107,16 @@ const menuItems: Item[] = [
     label: 'Lote',
     icon: Send,
     submenus: [
-      { id: '/enviar', label: 'Enviar' },
-      { id: '/consultar-lote', label: 'Consultar' }
+      { id: '/enviar', label: 'Enviar', icon: ChevronRight },
+      { id: '/consultar-lote', label: 'Consultar', icon: ChevronRight }
     ]
   },
 ];
 
 export default function Sidebar() {
   const router = useRouter();
+  const pathname = usePathname();
+  const firstPath = pathname.split('/')[1]
 
   const [selectedItem, setSelectedItem] = useState<string>('dashboard');
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
@@ -122,19 +125,31 @@ export default function Sidebar() {
     router.push('/');
   };
 
+  useEffect(() => {
+    setExpandedMenus(prev =>
+      prev.includes(firstPath)
+        ? prev.filter(id => id !== firstPath)
+        : [...prev, firstPath]
+    );
+  }, []);
+
   return (
-    <aside className="flex flex-col w-80 h-fit bg-white rounded-3xl overflow-hidden">
+    <aside className="flex flex-col w-80 h-fit bg-white rounded-3xl overflow-hidden max-w-[260px]">
       <div className="flex items-center space-x-3 p-4 border-b border-gray-200/50">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-full flex items-center justify-center">
-          <FileText className="w-7 h-7 text-white" />
-        </div>
+        <Image
+          alt="Logo"
+          src="/images/logo.jpg"
+          width={48}
+          height={48}
+          className="w-12 h-12 rounded-full"
+        />
         <div className="text-sm text-primary-800">
-          <div className="font-bold text-lg">NFSE</div>
+          <div className="font-bold text-lg">NFS-e</div>
           <div className="text-sm text-gray-600 font-medium">Prefeitura de Tupaciguara</div>
         </div>
       </div>
 
-      <nav className="p-2 space-y-2">
+      <nav className="px-2 py-3 space-y-2">
         {menuItems.map((item) =>
           <MenuItem
             item={item}

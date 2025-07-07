@@ -5,12 +5,12 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-primary-800 to-primary-900 text-white py-16">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="flex flex-col md:flex-row justify-between gap-12">
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <Image
                 alt="Logo"
-                src="/logo.jpg"
+                src="/images/logo.jpg"
                 width={48}
                 height={48}
                 className="rounded-full"

@@ -13,8 +13,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen">
-
-
       <div className="flex p-8 gap-8">
         {/* Sidebar */}
         <Sidebar/>
@@ -46,8 +44,7 @@ export default function Dashboard() {
               >
                 <CardContent className="p-8">
                   <div className="flex items-center space-x-6">
-                    <div
-                      className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl flex items-center justify-center transition-transform duration-300">
                       <PlusCircle className="w-8 h-8 text-primary-700"/>
                     </div>
                     <div>
