@@ -89,7 +89,7 @@ export default function Home() {
                 description={access.description}
                 color={access.color}
                 Icon={access.icon}
-                onClick={access.onClick}
+                onClick={() => { if (access?.onClick) access.onClick }}
               />
             )}
           </div>
