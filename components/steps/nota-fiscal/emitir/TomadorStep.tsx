@@ -18,7 +18,7 @@ export default function TomadorStep({
   return (
     <div className={cn("", className)}>
 
-      <h2 className="text-3xl font-bold text-gray-900 gradient-text">Tomador de serviços</h2>
+      <h2 className="text-3xl font-bold text-gray-900">Tomador de serviços</h2>
 
       {/* Tipo de Pessoa */}
       <div className="space-y-6">

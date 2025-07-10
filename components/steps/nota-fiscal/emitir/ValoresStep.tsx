@@ -13,7 +13,7 @@ export default function ValoresStep({
 }: StepComponentProps) {
   return (
     <div className={cn("", className)}>
-      <h2 className="text-3xl font-bold text-gray-900 gradient-text">Valores</h2>
+      <h2 className="text-3xl font-bold text-gray-900">Valores</h2>
 
       {/* Valor Serviço */}
       <div className="space-y-3">

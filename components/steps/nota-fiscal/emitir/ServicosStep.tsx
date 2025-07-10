@@ -16,7 +16,7 @@ export default function ServicosStep({
 }: StepComponentProps) {
   return (
     <div className={cn("", className)}>
-      <h2 className="text-3xl font-bold text-gray-900 gradient-text">Valor</h2>
+      <h2 className="text-3xl font-bold text-gray-900">Valor</h2>
 
       {/* Valor Serviço */}
       <div className="space-y-3">
@@ -53,7 +53,6 @@ export default function ServicosStep({
             id="codigo-cnae"
             value="951190000"
             readOnly
-            className="bg-gray-50 h-12"
           />
         </div>
 
@@ -63,7 +62,6 @@ export default function ServicosStep({
             id="lista-servico"
             value="14.01 - LUBRIFICAÇÃO, LIMPEZA, LUSTRAÇÃO, REVISÃO, CARGA E RECARGA, CONSERTO, RE."
             readOnly
-            className="bg-gray-50 h-12"
           />
         </div>
       </div>
@@ -103,13 +101,14 @@ export default function ServicosStep({
       {/* Local */}
       <div className="space-y-6">
         <Label className="text-lg font-semibold">Local da Incidência: Estabelecimento do Prestador</Label>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
             <Label htmlFor="local-prestacao" className="font-medium">Local da Prestação*</Label>
-            <Select value={formData.localPrestacao}
-                    onValueChange={(value) => handleInputChange('localPrestacao', value)}>
-              <SelectTrigger >
+            <Select
+              value={formData.localPrestacao}
+              onValueChange={(value) => handleInputChange('localPrestacao', value)}
+            >
+              <SelectTrigger>
                 <SelectValue placeholder="TUPACIGUARA - MG"/>
               </SelectTrigger>
               <SelectContent>
@@ -118,13 +117,12 @@ export default function ServicosStep({
             </Select>
           </div>
           <div className="space-y-3">
-            <Label htmlFor="aliquota" className="font-medium">Alíquota(%)</Label>
+            <Label htmlFor="aliquota" className="font-medium">Alíquota (%)</Label>
             <Input
               id="aliquota"
               value={formData.aliquota}
               onChange={(e) => handleInputChange('aliquota', e.target.value)}
               placeholder="2"
-              
             />
           </div>
         </div>
@@ -182,7 +180,6 @@ export default function ServicosStep({
               value={formData.quantidade}
               onChange={(e) => handleInputChange('quantidade', e.target.value)}
               placeholder="1"
-              
             />
           </div>
           <div className="space-y-3">
@@ -192,7 +189,6 @@ export default function ServicosStep({
               value={formData.valorUnitario}
               onChange={(e) => handleInputChange('valorUnitario', e.target.value)}
               placeholder="R$ 4.000,00"
-              
             />
           </div>
           <div className="space-y-3">
@@ -202,7 +198,6 @@ export default function ServicosStep({
               value={formData.valorTotal}
               onChange={(e) => handleInputChange('valorTotal', e.target.value)}
               placeholder="R$ 4.000,00"
-              
             />
           </div>
         </div>
@@ -211,7 +206,7 @@ export default function ServicosStep({
           <Button variant="ghost" size="sm">
             Limpar
           </Button>
-          <Button size="sm" className="rounded-full bg-gradient-to-r from-primary-600 to-primary-700">
+          <Button size="sm" className="rounded-full bg-primary-600">
             Inserir
           </Button>
         </div>
@@ -219,8 +214,8 @@ export default function ServicosStep({
 
       {/* Tabela de Serviços */}
       <div className="space-y-6">
-        <Card className="bg-white border-0 rounded-3xl overflow-hidden">
-          <CardContent className="">
+        <Card className="border-0 overflow-hidden">
+          <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -269,7 +264,6 @@ export default function ServicosStep({
             id="valor-servico-total"
             value="R$ 4.000,00"
             readOnly
-            className="bg-gray-50 h-12"
           />
         </div>
         <div className="space-y-3">
@@ -278,7 +272,6 @@ export default function ServicosStep({
             id="sub-total"
             value="R$ 4.000,00"
             readOnly
-            className="bg-gray-50 h-12"
           />
         </div>
       </div>

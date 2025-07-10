@@ -8,7 +8,7 @@ export default function EventosStep({
 }: StepComponentProps) {
   return (
     <div className={cn("text-center py-16", className)}>
-      <h2 className="text-3xl font-bold text-gray-900 mb-6 gradient-text">Eventos</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">Eventos</h2>
       <p className="text-gray-600 text-lg">Esta etapa será implementada nas próximas versões.</p>
     </div>
   );

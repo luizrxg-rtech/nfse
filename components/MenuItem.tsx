@@ -1,6 +1,6 @@
 import {ChevronDown, ChevronRight, Dot} from "lucide-react";
 import {Dispatch, SetStateAction, useEffect} from "react";
-import {Item} from "@/types/MenuItem";
+import {Item, Submenu} from "@/types/MenuItem";
 import {usePathname, useRouter} from "next/navigation";
 
 export default function MenuItem({
@@ -35,16 +35,13 @@ export default function MenuItem({
   }
 
   return (
-    <div
-      className={``}
-      key={item.id}
-    >
+    <div>
       <button
         onClick={() => hasSubmenu ? toggleMenu(item.id) : handleNavigate(item.id)}
-        className={`w-full flex items-center justify-between px-4 py-3 rounded-full transition-all duration-300 ${
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 ${
           pathname === item.id
-            ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white text'
-            : 'text-gray-700 hover:bg-primary-100/90 hover:text-accent'
+            ? 'bg-primary-600 text-white text'
+            : 'text-gray-700 hover:bg-primary-100 hover:text-accent'
         } `}
       >
         <div className="flex items-center space-x-4">
@@ -61,19 +58,21 @@ export default function MenuItem({
       </button>
 
       {hasSubmenu && isExpanded && (
-        <div className="mt-2 p-2 space-y-2 bg-gray-50 rounded-3xl overflow-hidden transition-all duration-300">
-          {item.submenus!!.map((submenu: any) => (
+        <div className="space-y-2 p-2 my-2 bg-gray-600/5 rounded-xl overflow-hidden transition-all duration-300">
+          {item.submenus!!.map((submenu: Submenu, index: number) => (
             <button
+              key={index}
               onClick={() => handleNavigate(item.id + submenu.id)}
-              key={submenu.id}
-              className={`flex items-center w-full space-x-3 px-4 py-2 rounded-full text-gray-700 hover:bg-primary-100/90 hover:text-accent transition-all duration-200 ${
+              className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 ${
                 pathname === item.id + submenu.id
-                  ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white text'
-                  : 'text-gray-700 hover:bg-primary-100/90 hover:text-accent'
+                  ? 'bg-primary-600 text-white text'
+                  : 'text-gray-700 hover:bg-primary-100 hover:text-accent'
               } `}
             >
-              <submenu.icon className="w-5 h-5"/>
-              <span className="text-sm">{submenu.label}</span>
+              <div className="flex items-center space-x-4 mr-4">
+                <submenu.icon className="w-5 h-5"/>
+                <span className="text-sm font-medium">{submenu.label}</span>
+              </div>
             </button>
           ))}
         </div>

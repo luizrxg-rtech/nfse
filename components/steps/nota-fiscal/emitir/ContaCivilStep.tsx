@@ -11,7 +11,7 @@ export default function ContaCivilStep({
 }: StepComponentProps) {
   return (
     <div className={cn("", className)}>
-      <h2 className="text-3xl font-bold text-gray-900 gradient-text">Construção Civil</h2>
+      <h2 className="text-3xl font-bold text-gray-900">Construção Civil</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">

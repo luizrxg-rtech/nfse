@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {usePathname, useRouter} from "next/navigation";
 import {Item} from "@/types/MenuItem";
 import MenuItem from "@/components/MenuItem";
@@ -134,24 +135,20 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="flex flex-col w-80 h-fit bg-white rounded-3xl overflow-hidden max-w-[260px]">
-      <div className="flex items-center space-x-3 p-4 border-b border-gray-200/50">
+    <Card className="flex flex-col min-w-[350px] h-fit overflow-hidden max-w-[260px]">
+      <CardHeader className="flex items-center space-x-3 p-6 border-b border-gray-200/50">
         <Image
           alt="Logo"
-          src="/images/logo.jpg"
-          width={48}
-          height={48}
-          className="w-12 h-12 rounded-full"
+          src="/images/logo.png"
+          width={2196}
+          height={803}
+          className="w-full h-auto rounded-full"
         />
-        <div className="text-sm text-primary-800">
-          <div className="font-bold text-lg">NFS-e</div>
-          <div className="text-sm text-gray-600 font-medium">Prefeitura de Tupaciguara</div>
-        </div>
-      </div>
-
-      <nav className="px-2 py-3 space-y-2">
-        {menuItems.map((item) =>
+      </CardHeader>
+      <CardContent role="navigation" className="px-3 py-3 space-y-3">
+        {menuItems.map((item: Item, index: number) =>
           <MenuItem
+            key={index}
             item={item}
             selectedItem={selectedItem}
             setSelectedItem={setSelectedItem}
@@ -159,9 +156,8 @@ export default function Sidebar() {
             setExpandedMenus={setExpandedMenus}
           />
         )}
-      </nav>
-
-      <div className="border-t hover:border-red-50">
+      </CardContent>
+      <CardFooter className="border-t w-full hover:border-red-50">
         <Button
           variant="ghost"
           size="sm"
@@ -171,7 +167,7 @@ export default function Sidebar() {
           <LogOut className="w-4 h-4" />
           <span>Sair</span>
         </Button>
-      </div>
-    </aside>
+      </CardFooter>
+    </Card>
   );
 };

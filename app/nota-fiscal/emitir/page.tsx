@@ -131,42 +131,40 @@ export default function NotaFiscal() {
           />
 
           {/* Step Content */}
-          <div className="flex w-full min-h-fit overflow-x-hidden scroll-smooth space-x-4 rounded-3xl">
-            <Card
-              className="flex flex-col min-w-full max-h-fit bg-white"
-            >
-              {
-                steps[currentStep - 1].component(
-                  {
-                    formData: formData,
-                    handleInputChange: handleInputChange,
-                    className: "flex flex-col space-y-8 w-full max-h-fit p-12"
-                  }
-                )
-              }
+          <Card
+            className="flex flex-col w-full min-h-fit overflow-x-hidden scroll-smooth space-y-4"
+          >
+            {
+              steps[currentStep - 1].component(
+                {
+                  formData: formData,
+                  handleInputChange: handleInputChange,
+                  className: "flex flex-col space-y-8 w-full max-h-fit p-12"
+                }
+              )
+            }
 
-              {/* Navigation Buttons */}
-              <div className="flex justify-between mt-10 p-12">
-                <Button
-                  variant="translucid"
-                  onClick={handleBack}
-                  disabled={currentStep === 1}
-                  className="flex items-center space-x-3 px-8 py-3 rounded-full"
-                >
-                  <ArrowLeft className="w-5 h-5"/>
-                  <span>Voltar</span>
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  disabled={currentStep === steps.length}
-                  className="flex items-center space-x-3"
-                >
-                  <span>Avançar</span>
-                  <ArrowRight className="w-5 h-5"/>
-                </Button>
-              </div>
-            </Card>
-          </div>
+            {/* Navigation Buttons */}
+            <div className="flex justify-between p-12 pt-0">
+              <Button
+                variant="translucid"
+                onClick={handleBack}
+                disabled={currentStep === 1}
+                className="flex items-center space-x-3 px-8 py-3 rounded-full"
+              >
+                <ArrowLeft className="w-5 h-5"/>
+                <span>Voltar</span>
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={currentStep === steps.length}
+                className="flex items-center space-x-3"
+              >
+                <span>Avançar</span>
+                <ArrowRight className="w-5 h-5"/>
+              </Button>
+            </div>
+          </Card>
         </main>
       </div>
 

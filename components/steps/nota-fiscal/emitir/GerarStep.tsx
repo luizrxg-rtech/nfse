@@ -13,7 +13,7 @@ export default function GerarStep({
 }: StepComponentProps) {
   return (
     <div className={cn("text-center", className)}>
-      <h2 className="text-3xl font-bold text-gray-900 gradient-text">Gerar Nota Fiscal</h2>
+      <h2 className="text-3xl font-bold text-gray-900">Gerar Nota Fiscal</h2>
 
       <div className="space-y-8">
         <p className="text-gray-600 text-lg">
@@ -23,7 +23,7 @@ export default function GerarStep({
         <div className="flex justify-center space-x-6">
 
           <Button
-            className="flex items-center space-x-3 px-8 py-3 rounded-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800"
+            className="flex items-center space-x-3 px-8 py-3 rounded-full bg-primary-600 hover:from-primary-700 hover:to-primary-800"
           >
             <FileText className="w-5 h-5"/>
             <span>Gerar</span>
@@ -31,7 +31,7 @@ export default function GerarStep({
         </div>
 
         {/* Preview da Nota Fiscal */}
-        <Card className="bg-white border-0 rounded-3xl mt-12">
+        <Card className="border-0 mt-12">
           <CardHeader>
             <CardTitle className="text-center text-xl font-bold text-primary-700">
               NOTA FISCAL DE SERVIÇOS ELETRÔNICA - NFS-e
