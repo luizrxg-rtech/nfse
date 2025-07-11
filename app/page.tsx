@@ -56,8 +56,8 @@ export default function Home() {
               <div className="space-y-10">
                 <div className="flex flex-col gap-2">
                   <h1 className="text-5xl md:text-6xl text-white font-bold leading-tight"> NFS-e </h1>
-                  <span className="text-4xl md:text-5xl text-primary-80 font-light">Nota Fiscal de Serviços</span>
-                  <p className="mt-2 text-xl text-primary-80 leading-relaxed font-medium">
+                  <span className="text-4xl md:text-5xl text-gray-100 font-light">Nota Fiscal de Serviços</span>
+                  <p className="mt-2 text-xl text-gray-100 leading-relaxed font-medium">
                     Bem vindo(a) ao Portal de Notas Fiscais da Prefeitura de Tupaciguara.
                     Aqui você pode emitir Nota Fiscal, verificar autenticidade,
                     consultar RPS e muito mais.
