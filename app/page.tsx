@@ -49,39 +49,40 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="city-background">
-        <Header />
-        <section className="flex flex-col items-center bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur relative">
-          <div className="flex flex-col w-full px-8 max-w-7xl py-40 relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-10">
-                <div className="flex flex-col gap-2">
-                  <h1 className="text-5xl md:text-6xl text-white font-bold leading-tight"> NFS-e </h1>
-                  <span className="text-4xl md:text-5xl text-gray-100 font-light">Nota Fiscal de Serviços</span>
-                  <p className="mt-2 text-xl text-gray-100 leading-relaxed font-medium">
-                    Bem vindo(a) ao Portal de Notas Fiscais da Prefeitura de Tupaciguara.
-                    Aqui você pode emitir Nota Fiscal, verificar autenticidade,
-                    consultar RPS e muito mais.
-                  </p>
+        <div className="bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur ">
+          <Header />
+          <section className="flex flex-col items-center relative">
+            <div className="flex flex-col w-full px-8 max-w-7xl py-40 relative">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-10">
+                  <div className="flex flex-col gap-2">
+                    <h1 className="text-5xl md:text-6xl text-white font-bold leading-tight"> NFS-e </h1>
+                    <span className="text-4xl md:text-5xl text-gray-100 font-light">Nota Fiscal de Serviços</span>
+                    <p className="mt-2 text-xl text-gray-100 leading-relaxed font-medium">
+                      Bem vindo(a) ao Portal de Notas Fiscais da Prefeitura de Tupaciguara.
+                      Aqui você pode emitir Nota Fiscal, verificar autenticidade,
+                      consultar RPS e muito mais.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="absolute -bottom-96 lg:-bottom-10 max-w-7xl w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-3 px-4 sm:px-6 lg:px-8 gap-8">
-              {accesses.map((access, index) =>
-                <ActionCard
-                  key={index}
-                  title={access.title}
-                  description={access.description}
-                  color={access.color}
-                  Icon={access.icon}
-                  onClick={() => access?.onClick && access.onClick(access.method!!)}
-                />
-              )}
+            <div className="absolute -bottom-96 lg:-bottom-10 max-w-7xl w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-3 px-4 sm:px-6 lg:px-8 gap-8">
+                {accesses.map((access, index) =>
+                  <ActionCard
+                    key={index}
+                    title={access.title}
+                    description={access.description}
+                    color={access.color}
+                    Icon={access.icon}
+                    onClick={() => access?.onClick && access.onClick(access.method!!)}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        </section>
-
+          </section>
+        </div>
       </div>
 
       <section className="flex flex-col items-center py-32 bg-gray-100">

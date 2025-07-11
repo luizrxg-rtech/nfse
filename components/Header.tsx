@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur">
+    <header className="">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex justify-between items-center pyh-20">
           <div className="flex items-center space-x-3">
