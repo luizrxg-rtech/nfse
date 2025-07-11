@@ -50,7 +50,7 @@ export default function Home() {
     <div className="min-h-screen">
       <div className="city-background">
         <Header />
-        <section className="flex flex-col items-center relative">
+        <section className="flex flex-col items-center bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur relative">
           <div className="flex flex-col w-full px-8 max-w-7xl py-40 relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-10">
