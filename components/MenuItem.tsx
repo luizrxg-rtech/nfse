@@ -1,3 +1,5 @@
+'use client';
+
 import {ChevronDown, ChevronRight, Dot} from "lucide-react";
 import {Dispatch, SetStateAction, useEffect} from "react";
 import {Item, Submenu} from "@/types/MenuItem";
@@ -7,26 +9,22 @@ export default function MenuItem({
   item,
   selectedItem,
   setSelectedItem,
-  expandedMenus,
-  setExpandedMenus
+  expandedMenu,
+  setExpandedMenu
 }: {
   item: Item;
   selectedItem: string;
   setSelectedItem: Dispatch<SetStateAction<string>>;
-  expandedMenus: string[];
-  setExpandedMenus: Dispatch<SetStateAction<string[]>>;
+  expandedMenu: string;
+  setExpandedMenu: Dispatch<SetStateAction<string>>;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const hasSubmenu = item.submenus && item.submenus.length > 0;
-  const isExpanded = expandedMenus.includes(item.id) || pathname.includes(item.id);
+  const isExpanded = expandedMenu == item.id
 
-  const toggleMenu = (menuId: string) => {
-    setExpandedMenus(prev =>
-      prev.includes(menuId)
-        ? prev.filter(id => id !== menuId)
-        : [...prev, menuId]
-    );
+  const toggleMenu = () => {
+    setExpandedMenu(prev => prev === item.id ? '' : item.id);
   };
 
   const handleNavigate = (id: string) => {
@@ -35,13 +33,14 @@ export default function MenuItem({
   }
 
   return (
-    <div>
+    <div className="flex flex-col">
       <button
-        onClick={() => hasSubmenu ? toggleMenu(item.id) : handleNavigate(item.id)}
-        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 ${
+        onClick={() => hasSubmenu ? toggleMenu() : handleNavigate(item.id)}
+        style={{width: "calc(100% - 1.5rem)"}}
+        className={`w-full flex items-center justify-between px-4 py-3 mx-3 rounded-full transition-all duration-300 ${
           pathname === item.id
-            ? 'bg-primary-600 text-white text'
-            : 'text-gray-700 hover:bg-primary-100 hover:text-accent'
+            ? 'bg-gradient text-white text'
+            : 'text-gray-700 hover:bg-primary-100 hover:text-primary'
         } `}
       >
         <div className="flex items-center space-x-4">
@@ -57,26 +56,29 @@ export default function MenuItem({
         )}
       </button>
 
-      {hasSubmenu && isExpanded && (
-        <div className="space-y-2 p-2 my-2 bg-gray-600/5 rounded-xl overflow-hidden transition-all duration-300">
-          {item.submenus!!.map((submenu: Submenu, index: number) => (
-            <button
-              key={index}
-              onClick={() => handleNavigate(item.id + submenu.id)}
-              className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 ${
-                pathname === item.id + submenu.id
-                  ? 'bg-primary-600 text-white text'
-                  : 'text-gray-700 hover:bg-primary-100 hover:text-accent'
-              } `}
-            >
-              <div className="flex items-center space-x-4 mr-4">
-                <submenu.icon className="w-5 h-5"/>
-                <span className="text-sm font-medium">{submenu.label}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
+      <div
+        className={
+          `overflow-hidden px-3 transition-all duration-300
+            ${(hasSubmenu && isExpanded) ? "h-fit border-y border-gray-200/50 space-y-2 py-2 mt-2 " : "max-h-0"}
+        `}
+      >
+        {item.submenus?.map((submenu: Submenu, index: number) => (
+          <button
+            key={index}
+            onClick={() => handleNavigate(item.id + submenu.id)}
+            className={`w-full flex items-center px-4 py-3 rounded-full transition-all duration-300 ${
+              pathname === item.id + submenu.id
+                ? 'bg-gradient text-white text'
+                : 'text-gray-700 hover:bg-primary-100 hover:text-primary'
+            } `}
+          >
+            <div className="flex items-center space-x-3 mr-4">
+              <submenu.icon className="w-4 h-4"/>
+              <span className="text-sm font-medium">{submenu.label}</span>
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
   )
 }

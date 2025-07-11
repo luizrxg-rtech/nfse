@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {
+  ChartBar,
   Download,
   FileText,
   Globe,
@@ -39,7 +40,7 @@ export default function Home() {
 
   const services: Service[] = [
     {title: 'DES-IF',                   icon: FileText,    color: "blue"   },
-    {title: 'Relatório de NFs Pagas',   icon: FileText,    color: "primary"},
+    {title: 'Relatório de NFs Pagas',   icon: ChartBar,    color: "primary"},
     {title: 'Documentação RPS',         icon: Download,    color: "purple" },
     {title: 'Escrituração',             icon: ScrollText,  color: "orange" },
     {title: 'NFS-e Avulsa',             icon: ReceiptText, color: "red"    },
@@ -49,7 +50,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="city-background">
-        <div className="bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur ">
+        <div className="bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur-xs ">
           <Header />
           <section className="flex flex-col items-center relative">
             <div className="flex flex-col w-full px-8 max-w-7xl py-40 relative">
@@ -104,7 +105,7 @@ export default function Home() {
 
       <Footer />
 
-      {isLoggingIn && <Loading text={"Autenticando..."}/>}
+      {isLoggingIn && <Loading text={"Autenticando"}/>}
     </div>
   );
 }

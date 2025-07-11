@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: 'NFS-e | Prefeitura de Tupaciguara',
@@ -16,7 +17,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/favicon.ico" />
       </head>
-      <body className="font-sans bg-gray-100">{children}</body>
+      <body className="font-sans bg-gray-100">
+        {children}
+      </body>
     </html>
   );
 }

@@ -104,11 +104,11 @@ export default function NotaFiscal() {
 
   return (
     <div id="page" className="max-h-screen overflow-y-auto">
-      <div className="flex p-8 gap-8">
+      <div className="flex ">
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex flex-col w-full gap-4">
+        <main className="flex flex-col w-full p-8 gap-4">
           {/* Header Info */}
           <div className="mb-2">
             <div className="flex items-center justify-between">

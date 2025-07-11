@@ -67,19 +67,9 @@
   }
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.glass-dark {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #06403b 0%, #0a5d54 50%, #0e7a6d 100%);
+.bg-gradient {
+  @apply bg-gradient-to-r from-primary-600 to-primary-700
+  ;
 }
 
 .city-background {
@@ -90,7 +80,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #06403b, #0e7a6d);
+  @apply bg-gradient;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

@@ -1,3 +1,5 @@
+'use client';
+
 import {Card, CardContent} from "@/components/ui/card";
 import {LucideIcon} from "lucide-react";
 import {cn} from "@/lib/utils";
@@ -28,6 +30,7 @@ export default function ActionCard({
       <div className="bg-amber-100 text-amber-700"/>
       <div className="bg-purple-100 text-purple-700"/>
       <div className="bg-orange-100 text-orange-700"/>
+      <div className="bg-fuchsia-100 text-fuchsia-700"/>
       <CardContent className="flex items-center min-w-fit p-8 space-x-6">
         <div className={`min-w-[64px] min-h-[64px] w-16 h-16 rounded-xl flex items-center justify-center bg-${color}-100 `}>
           <Icon className={`w-8 h-8 text-${color}-700`}/>

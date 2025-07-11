@@ -3,11 +3,12 @@
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent} from '@/components/ui/card';
-import {Ban, Building, Edit3, FileSearch, FileText, PlusCircle, Send} from 'lucide-react';
+import {CircleOff, Building, Edit3, FileSearch, FileText, History, Plus, Repeat, Search, Send} from 'lucide-react';
 import Footer from '@/components/Footer';
 import Sidebar from "@/components/Sidebar";
 import {QuickAccess} from "@/types/Dashboard";
 import ActionCard from "@/components/ActionCard";
+import RecentActivity from "@/components/RecentActivity";
 
 
 export default function Dashboard() {
@@ -17,24 +18,32 @@ export default function Dashboard() {
     {
       title: 'Emitir',
       description: 'Nota Fiscal',
-      icon: PlusCircle,
+      icon: Plus,
       color: 'primary',
       path: '/nota-fiscal/emitir',
       onClick: (path) => router.push(path),
     },
     {
-      title: 'Personalizar',
+      title: 'Cancelar',
       description: 'Nota Fiscal',
-      icon: Edit3,
-      color: 'blue',
+      icon: CircleOff,
+      color: 'red',
       path: '',
       onClick: (path) => router.push(path),
     },
     {
-      title: 'Cancelar',
+      title: 'Consulta Rápida',
       description: 'Nota Fiscal',
-      icon: Ban,
-      color: 'red',
+      icon: Search,
+      color: 'fuchsia',
+      path: '',
+      onClick: (path) => router.push(path),
+    },
+    {
+      title: 'Reemitir',
+      description: 'Nota Fiscal',
+      icon: Repeat,
+      color: 'blue',
       path: '',
       onClick: (path) => router.push(path),
     },
@@ -43,14 +52,6 @@ export default function Dashboard() {
       description: 'Lote',
       icon: Send,
       color: 'amber',
-      path: '',
-      onClick: (path) => router.push(path),
-    },
-    {
-      title: 'Consultar',
-      description: 'Nota Fiscal',
-      icon: FileSearch,
-      color: 'purple',
       path: '',
       onClick: (path) => router.push(path),
     },
@@ -66,13 +67,9 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen">
-      <div className="flex p-8 gap-8">
-        {/* Sidebar */}
+      <div className="flex items-stretch shadow-lg">
         <Sidebar/>
-
-        {/* Main Content */}
-        <main className="flex-1">
-          {/* Header Info */}
+        <main className="flex-1 p-8">
           <div className="mb-2">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 font-medium">
@@ -86,10 +83,9 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Quick Actions */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Acesso Rápido</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {quickAccesses.map((quickAccess, index) =>
                 <ActionCard
                   key={index}
@@ -102,23 +98,9 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-
-          {/* Recent Activity */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Atividades Recentes</h2>
-            <Card className="border-0">
-              <CardContent className="p-12">
-                <div className="text-center text-gray-500 py-12">
-                  <FileText className="w-16 h-16 mx-auto mb-6 text-gray-300"/>
-                  <p className="text-lg font-medium">Nenhuma atividade recente</p>
-                  <p className="text-sm mt-3">Suas notas fiscais emitidas aparecerão aqui</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <RecentActivity />
         </main>
       </div>
-
       <Footer/>
     </div>
   );

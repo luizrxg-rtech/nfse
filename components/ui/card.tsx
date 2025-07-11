@@ -8,8 +8,11 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    style={{
+      // clipPath: "polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 0)"
+    }}
     className={cn(
-      'rounded-xl bg-card text-card-foreground shadow-lg',
+      'rounded-2xl bg-card text-card-foreground shadow-md',
       className
     )}
     {...props}
