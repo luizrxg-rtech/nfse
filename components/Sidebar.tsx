@@ -142,7 +142,7 @@ export default function Sidebar() {
           src="/images/logo.png"
           width={2196}
           height={803}
-          className="w-full h-auto rounded-full"
+          className="w-auto h-10 mx-auto rounded-full"
         />
       </CardHeader>
       <CardContent role="navigation" className="px-3 py-3 space-y-3">
