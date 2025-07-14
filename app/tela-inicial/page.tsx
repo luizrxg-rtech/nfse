@@ -2,8 +2,7 @@
 
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {Card, CardContent} from '@/components/ui/card';
-import {CircleOff, Building, Edit3, FileSearch, FileText, History, Plus, Repeat, Search, Send} from 'lucide-react';
+import {Building, CircleOff, Plus, Repeat, Search, Send} from 'lucide-react';
 import Footer from '@/components/Footer';
 import Sidebar from "@/components/Sidebar";
 import {QuickAccess} from "@/types/Dashboard";
@@ -11,7 +10,7 @@ import ActionCard from "@/components/ActionCard";
 import RecentActivity from "@/components/RecentActivity";
 
 
-export default function Dashboard() {
+export default function TelaInicial() {
   const router = useRouter();
 
   const quickAccesses: QuickAccess[] = [

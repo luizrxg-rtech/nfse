@@ -6,9 +6,6 @@ export interface Submenu {
   icon: LucideIcon;
 }
 
-export interface Item {
-  id: string;
-  label: string;
-  icon: LucideIcon;
+export interface Item extends Submenu {
   submenus?: Submenu[]
 }

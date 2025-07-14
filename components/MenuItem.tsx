@@ -5,19 +5,21 @@ import {Dispatch, SetStateAction, useEffect} from "react";
 import {Item, Submenu} from "@/types/MenuItem";
 import {usePathname, useRouter} from "next/navigation";
 
+interface MenuItemProps {
+  item: Item,
+  selectedItem: string,
+  setSelectedItem(value: string | ((prev: string) => string)): void,
+  expandedMenu: string,
+  setExpandedMenu(value: string | ((prev: string) => string)): void
+}
+
 export default function MenuItem({
   item,
   selectedItem,
   setSelectedItem,
   expandedMenu,
   setExpandedMenu
-}: {
-  item: Item;
-  selectedItem: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
-  expandedMenu: string;
-  setExpandedMenu: Dispatch<SetStateAction<string>>;
-}) {
+}: MenuItemProps) {
   const router = useRouter();
   const pathname = usePathname();
   const hasSubmenu = item.submenus && item.submenus.length > 0;
@@ -39,8 +41,8 @@ export default function MenuItem({
         style={{width: "calc(100% - 1.5rem)"}}
         className={`w-full flex items-center justify-between px-4 py-3 mx-3 rounded-full transition-all duration-300 ${
           pathname === item.id
-            ? 'bg-gradient text-white text'
-            : 'text-gray-700 hover:bg-primary-100 hover:text-primary'
+            ? 'bg-accent text-white text'
+            : 'text-gray-700 hover:bg-accent-100 hover:text-accent'
         } `}
       >
         <div className="flex items-center space-x-4">
@@ -68,8 +70,8 @@ export default function MenuItem({
             onClick={() => handleNavigate(item.id + submenu.id)}
             className={`w-full flex items-center px-4 py-3 rounded-full transition-all duration-300 ${
               pathname === item.id + submenu.id
-                ? 'bg-gradient text-white text'
-                : 'text-gray-700 hover:bg-primary-100 hover:text-primary'
+                ? 'bg-accent text-white text'
+                : 'text-gray-700 hover:bg-accent-100 hover:text-accent'
             } `}
           >
             <div className="flex items-center space-x-3 mr-4">

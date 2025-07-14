@@ -21,7 +21,7 @@ import {QuickAccess} from "@/types/Dashboard";
 import ActionCard from "@/components/ActionCard";
 import RecentActivity from "@/components/RecentActivity";
 
-export default function Dashboard() {
+export default function Consulta() {
   const router = useRouter();
 
   const quickAccesses: QuickAccess[] = [

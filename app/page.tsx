@@ -27,9 +27,8 @@ export default function Home() {
 
   const handleLogin = async (method: LoginMethod) => {
     setIsLoggingIn(true);
-    // Simulate login process
     await new Promise(resolve => setTimeout(resolve, 1500));
-    router.push('/dashboard');
+    router.push('/tela-inicial');
   };
 
   const accesses: Access[] = [
@@ -57,12 +56,12 @@ export default function Home() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div className="space-y-10">
                   <div className="flex flex-col gap-2">
-                    <h1 className="text-5xl md:text-6xl text-white font-bold leading-tight"> NFS-e </h1>
-                    <span className="text-4xl md:text-5xl text-gray-100 font-light">Nota Fiscal de Serviços</span>
-                    <p className="mt-2 text-xl text-gray-100 leading-relaxed font-medium">
-                      Bem vindo(a) ao Portal de Notas Fiscais da Prefeitura de Tupaciguara.
-                      Aqui você pode emitir Nota Fiscal, verificar autenticidade,
-                      consultar RPS e muito mais.
+                    <h1 className="text-5xl md:text-6xl text-white font-normal leading-tight"> NFS-e </h1>
+                    <span className="text-4xl md:text-5xl text-gray-100 font-bold">Nota Fiscal de Serviços</span>
+                    <p className="mt-2 text-xl text-gray-100 leading-relaxed font-normal">
+                      Seja bem-vindo(a) ao Portal de Notas Fiscais da Prefeitura de Tupaciguara.
+                      Neste espaço, você pode emitir suas Notas Fiscais,
+                      conferir a autenticidade dos documentos, consultar RPS e acessar diversos outros serviços.
                     </p>
                   </div>
                 </div>
@@ -86,7 +85,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="flex flex-col items-center py-32 bg-gray-100">
+      <section className="flex flex-col items-center py-32 bg-background">
         <div className="lg:hidden h-96"/>
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Acesso Rápido</h2>
         <div className="flex flex-col w-full max-w-7xl px-4 sm:px-6 lg:px-8 gap-8">

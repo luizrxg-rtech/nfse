@@ -1,3 +1,5 @@
+'use client';
+
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -20,7 +22,7 @@ export default function ServicosStep({
 
       {/* Valor Serviço */}
       <div className="space-y-3">
-        <Label htmlFor="valor-servico" className="text-lg font-semibold">Valor Serviço*</Label>
+        <Label htmlFor="valor-servico">Valor Serviço*</Label>
         <Input
           id="valor-servico"
           value={formData.valorServico}
@@ -32,7 +34,7 @@ export default function ServicosStep({
 
       {/* Atividade */}
       <div className="space-y-6">
-        <Label className="text-lg font-semibold">Atividade</Label>
+        <Label>Atividade</Label>
 
         <div className="space-y-3">
           <Label htmlFor="codigo-tributacao" className="font-medium">Código de Tributação Municipal*</Label>
@@ -68,7 +70,7 @@ export default function ServicosStep({
 
       {/* Tributação */}
       <div className="space-y-6">
-        <Label className="text-lg font-semibold">Tributação</Label>
+        <Label>Tributação</Label>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
@@ -100,7 +102,7 @@ export default function ServicosStep({
 
       {/* Local */}
       <div className="space-y-6">
-        <Label className="text-lg font-semibold">Local da Incidência: Estabelecimento do Prestador</Label>
+        <Label>Local da Incidência: Estabelecimento do Prestador</Label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
             <Label htmlFor="local-prestacao" className="font-medium">Local da Prestação*</Label>
@@ -130,7 +132,7 @@ export default function ServicosStep({
 
       {/* Discriminação */}
       <div className="space-y-6">
-        <Label htmlFor="discriminacao" className="text-lg font-semibold">Discriminação*</Label>
+        <Label htmlFor="discriminacao">Discriminação*</Label>
         <div className="flex items-center space-x-3 mb-4">
           <Checkbox id="detalhamento"/>
           <Label htmlFor="detalhamento" className="font-medium">Detalhamento dos Itens</Label>
@@ -146,7 +148,7 @@ export default function ServicosStep({
 
       {/* Descrição */}
       <div className="space-y-3">
-        <Label htmlFor="descricao" className="text-lg font-semibold">Descrição</Label>
+        <Label htmlFor="descricao">Descrição</Label>
         <Textarea
           id="descricao"
           value={formData.descricao}
@@ -158,7 +160,7 @@ export default function ServicosStep({
 
       {/* Tributável */}
       <div className="space-y-3">
-        <Label htmlFor="tributavel" className="text-lg font-semibold">Tributável</Label>
+        <Label htmlFor="tributavel">Tributável</Label>
         <Select value={formData.tributavel} onValueChange={(value) => handleInputChange('tributavel', value)}>
           <SelectTrigger >
             <SelectValue placeholder="SIM"/>

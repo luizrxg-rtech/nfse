@@ -134,7 +134,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const firstPath = pathname.split('/')[1]
 
-  const [selectedItem, setSelectedItem] = useState<string>('dashboard');
+  const [selectedItem, setSelectedItem] = useState<string>('tela-inicial');
   const [expandedMenu, setExpandedMenu] = useState<string>('');
 
   const handleLogout = () => {
@@ -173,7 +173,7 @@ export default function Sidebar() {
           variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="w-full rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors space-x-2 p-6"
+          className="w-full rounded-full hover:bg-red-50 hover:text-red-600 transition-colors space-x-2 p-6"
         >
           <LogOut className="w-4 h-4"/>
           <span>Sair</span>

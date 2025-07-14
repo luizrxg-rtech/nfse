@@ -1,3 +1,5 @@
+'use client';
+
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
@@ -17,7 +19,7 @@ export default function ValoresStep({
 
       {/* Valor Serviço */}
       <div className="space-y-3">
-        <Label htmlFor="valor-servico-valores" className="text-lg font-semibold">Valor Serviço*</Label>
+        <Label htmlFor="valor-servico-valores">Valor Serviço*</Label>
         <Input
           id="valor-servico-valores"
           value={formData.valorServico}
@@ -59,7 +61,7 @@ export default function ValoresStep({
 
       {/* Retenções Federais */}
       <div className="space-y-6">
-        <Label className="text-lg font-semibold">Retenções Federais</Label>
+        <Label>Retenções Federais</Label>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-3">
@@ -120,7 +122,7 @@ export default function ValoresStep({
 
       {/* Outras Informações */}
       <div className="space-y-3">
-        <Label htmlFor="outras-informacoes" className="text-lg font-semibold">Outras Informações</Label>
+        <Label htmlFor="outras-informacoes">Outras Informações</Label>
         <Textarea
           id="outras-informacoes"
           value={formData.outrasInformacoes}

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Nav from "@/components/Nav";
 
 export default function Header() {
   return (
@@ -16,12 +17,7 @@ export default function Header() {
               className="w-auto h-16"
             />
           </div>
-          <nav className="hidden md:flex items-center">
-            <a href="#" className="text-xl text-white hover:text-gray-500 transition-colors font-medium p-4">Nota Certa</a>
-            <a href="#" className="text-xl text-white hover:text-gray-500 transition-colors font-medium p-4">Legislação</a>
-            <a href="#" className="text-xl text-white hover:text-gray-500 transition-colors font-medium p-4">Dúvidas</a>
-            <a href="#" className="text-xl text-white hover:text-gray-500 transition-colors font-medium p-4">Fale conosco</a>
-          </nav>
+          <Nav />
         </div>
       </div>
     </header>

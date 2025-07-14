@@ -1,6 +1,9 @@
+'use client';
+
 import {Button} from "@/components/ui/button";
 import {FileText} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+
 import {Label} from "@/components/ui/label";
 
 import {cn} from "@/lib/utils";
