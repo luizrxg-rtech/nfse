@@ -11,10 +11,10 @@ interface StepperProps {
 }
 
 export default function Stepper({
-                                  steps,
-                                  setCurrentStep,
-                                  currentStep
-                                }: StepperProps) {
+  steps,
+  setCurrentStep,
+  currentStep
+}: StepperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [progressWidth, setProgressWidth] = useState(0);

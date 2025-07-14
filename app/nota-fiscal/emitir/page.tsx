@@ -136,7 +136,7 @@ export default function NotaFiscal() {
                 <Button
                   variant="translucid"
                   onClick={handleBack}
-                  className="flex items-center space-x-3 px-8 py-3 rounded-full mr-auto"
+                  className="flex items-center space-x-3 mr-auto"
                 >
                   <ArrowLeft className="w-5 h-5"/>
                   <span>Voltar</span>

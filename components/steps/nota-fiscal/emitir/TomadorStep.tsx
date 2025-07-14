@@ -20,14 +20,13 @@ export default function TomadorStep({
 }: StepComponentProps) {
   return (
     <div className={cn("", className)}>
-
       {/* Tomador de serviços */}
       <StepSectionCard
         title="Tomador de serviços"
         onClear={() => {}}
         onConfirm={() => {}}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Tipo de Pessoa */}
           <div className="space-y-6">
             <Label>Tipo de Pessoa</Label>
@@ -92,16 +91,17 @@ export default function TomadorStep({
       </StepSectionCard>
 
       {/* Endereço */}
-      <Card className="flex flex-col w-full min-h-fit space-y-4 p-12">
-        <h2 className="text-3xl font-bold text-primary-600">Endereço</h2>
+      <StepSectionCard
+        title="Endereço"
+        onClear={() => {}}
+        onConfirm={() => {}}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
           <SimOuNao
             value={formData.resideExterior}
             onChange={(value: string) => handleInputChange('resideExterior', value)}
             label="Reside no exterior ?"
           />
-
-
           <LabeledInput
             id="pais"
             label="País"
@@ -112,7 +112,6 @@ export default function TomadorStep({
             )}
             placeholder="Digite o país"
           />
-
           <LabeledInput
             id="cep"
             label="CEP"
@@ -121,7 +120,6 @@ export default function TomadorStep({
             onChange={(e) => handleInputChange('cep', e.target.value)}
             placeholder="00000-000"
           />
-
           <LabeledInput
             id="bairro"
             label="Bairro"
@@ -129,7 +127,6 @@ export default function TomadorStep({
             onChange={(e) => handleInputChange('bairro', e.target.value)}
             placeholder="Digite o bairro"
           />
-
           <div className="flex flex-row gap-4">
             <LabeledInput
               id="logradouro"
@@ -149,7 +146,6 @@ export default function TomadorStep({
               className="w-1/3"
             />
           </div>
-
           <LabeledInput
             id="complemento"
             label="Complemento"
@@ -157,7 +153,6 @@ export default function TomadorStep({
             onChange={(e) => handleInputChange('complemento', e.target.value)}
             placeholder="Digite o complemento"
           />
-
           <LabeledInput
             id="municipio"
             label="Município"
@@ -173,11 +168,14 @@ export default function TomadorStep({
             placeholder="Digite o estado"
           />
         </div>
-      </Card>
+      </StepSectionCard>
 
       {/* Contato */}
-      <Card className="flex flex-col w-full min-h-fit space-y-4 p-12">
-        <h2 className="text-3xl font-bold text-primary-600">Contato</h2>
+      <StepSectionCard
+        title="Tomador de serviços"
+        onClear={() => {}}
+        onConfirm={() => {}}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <LabeledInput
             id="telefone"
@@ -196,7 +194,7 @@ export default function TomadorStep({
             placeholder="exemplo@email.com"
           />
         </div>
-      </Card>
+      </StepSectionCard>
     </div>
   );
 }

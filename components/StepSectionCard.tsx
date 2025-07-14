@@ -26,18 +26,20 @@ export default function StepSectionCard({
 }: StepSectionCardProps, ) {
 
   return (
-    <Card className="flex flex-col w-full min-h-fit">
-      <h2 className="text-3xl font-bold px-12 py-8 text-accent">{title}</h2>
-      <div className={cn(className, "flex flex-col w-full min-h-fit space-y-4 p-12 py-0")}>
+    <Card className="flex flex-col w-full min-h-fit space-y-3">
+      <div>
+        <h2 className="text-3xl font-bold p-8 text-accent">{title}</h2>
+      </div>
+      <div className={cn(className, "flex flex-col w-full min-h-fit space-y-4 p-8 py-0")}>
         {children}
       </div>
       {onConfirm || onClear ?
-        <div className="flex p-12">
+        <div className="flex p-8">
           <Button
             variant="translucid"
             onClick={onClear}
             disabled={onClearDisabled}
-            className="flex items-center space-x-3 px-8 py-3 rounded-full mr-auto"
+            className="flex items-center space-x-3 mr-auto"
           >
             <X className="w-5 h-5"/>
             <span>Limpar</span>
