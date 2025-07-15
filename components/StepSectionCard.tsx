@@ -36,7 +36,7 @@ export default function StepSectionCard({
       {onConfirm || onClear ?
         <div className="flex p-8">
           <Button
-            variant="translucid"
+            variant="ghost"
             onClick={onClear}
             disabled={onClearDisabled}
             className="flex items-center space-x-3 mr-auto"

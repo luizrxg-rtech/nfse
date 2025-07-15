@@ -75,7 +75,7 @@ export default function TelaInicial() {
                 <span>105 COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
               </div>
               <div className="flex items-center space-x-4">
-                <Button variant="ghost" size="sm">
+                <Button variant="translucid" size="sm">
                   Selecionar Outra Empresa
                 </Button>
               </div>

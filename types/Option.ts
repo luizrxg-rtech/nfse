@@ -1,4 +1,4 @@
-interface SimOuNao {
+export interface Option {
   buttonValue: string;
   text: string;
 }
