@@ -3,7 +3,6 @@
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Building, CircleOff, Plus, Repeat, Search, Send} from 'lucide-react';
-import Footer from '@/components/Footer';
 import Sidebar from "@/components/Sidebar";
 import {QuickAccess} from "@/types/Dashboard";
 import ActionCard from "@/components/ActionCard";
@@ -66,13 +65,13 @@ export default function TelaInicial() {
 
   return (
     <div className="min-h-screen">
-      <div className="flex items-stretch shadow-lg">
+      <div className="flex min-h-full items-stretch">
         <Sidebar/>
         <main className="flex-1 p-8">
           <div className="mb-2">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 font-medium">
-                <span>105 COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
+                <span>R COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
               </div>
               <div className="flex items-center space-x-4">
                 <Button variant="translucid" size="sm">
@@ -100,7 +99,6 @@ export default function TelaInicial() {
           <RecentActivity />
         </main>
       </div>
-      <Footer/>
     </div>
   );
 }

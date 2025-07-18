@@ -153,3 +153,37 @@ input[type=number] {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-container, .print-container * {
+    visibility: visible;
+  }
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-container * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  .print-container .card {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+  }
+}

@@ -1,16 +1,13 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {Button} from '@/components/ui/button';
-import {Card} from '@/components/ui/card';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
 import Footer from '@/components/Footer';
 import Sidebar from "@/components/Sidebar";
 import TomadorStep from "@/components/steps/nota-fiscal/emitir/TomadorStep";
-import IntermediarioStep from "@/components/steps/nota-fiscal/emitir/IntermediarioStep";
 import ServicosStep from "@/components/steps/nota-fiscal/emitir/ServicosStep";
 import ValoresStep from "@/components/steps/nota-fiscal/emitir/ValoresStep";
-import EventosStep from "@/components/steps/nota-fiscal/emitir/EventosStep";
 import ConstruOCivilStep from "@/components/steps/nota-fiscal/emitir/ConstruçãoCivilStep";
 import GerarStep from "@/components/steps/nota-fiscal/emitir/GerarStep";
 import Stepper from "@/components/Stepper";
@@ -18,16 +15,18 @@ import {Step} from "@/types/Stepper";
 
 const steps: Step[] = [
   {id: 1, component: TomadorStep,       title: 'Tomador',          active: true},
-  {id: 2, component: IntermediarioStep, title: 'Intermediário',    active: false},
-  {id: 3, component: ServicosStep,      title: 'Serviços',         active: false},
-  {id: 4, component: ValoresStep,       title: 'Valores',          active: false},
-  {id: 5, component: EventosStep,       title: 'Eventos',          active: false},
-  {id: 6, component: ConstruOCivilStep, title: 'Construção Civil', active: false},
-  {id: 7, component: GerarStep,         title: 'Gerar',            active: false}
+  // {id: 2, component: IntermediarioStep, title: 'Intermediário',    active: false},
+  {id: 2, component: ServicosStep,      title: 'Serviços',         active: false},
+  {id: 3, component: ValoresStep,       title: 'Valores',          active: false},
+  // {id: 5, component: EventosStep,       title: 'Eventos',          active: false},
+  {id: 4, component: ConstruOCivilStep, title: 'Construção Civil', active: false},
+  {id: 5, component: GerarStep,         title: 'Gerar',            active: false}
 ];
 
 export default function NotaFiscal() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [stepValidation, setStepValidation] = useState<Record<number, boolean>>({});
+  const [showValidationError, setShowValidationError] = useState(false);
   const [formData, setFormData] = useState({
     tipoPessoa: 'cnpj',
     estabelecimentoTupaciguara: 'nao',
@@ -47,6 +46,8 @@ export default function NotaFiscal() {
     email: '',
     valorServico: '',
     codigoTributacao: '',
+    codigoCnae: '',
+    listaServico: '',
     listaTributacao: '',
     naturezaOperacao: '',
     regimeEspecial: '',
@@ -82,15 +83,38 @@ export default function NotaFiscal() {
     }));
   };
 
+  const handleValidationChange = useCallback((stepId: number, isValid: boolean) => {
+    setStepValidation(prev => ({
+      ...prev,
+      [stepId]: isValid
+    }));
+  }, []);
+
   const handleNext = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
+    // Check if current step is valid
+    const isCurrentStepValid = stepValidation[currentStep];
+    
+    if (isCurrentStepValid) {
+      // If valid, proceed to next step
+      if (currentStep < steps.length) {
+        setCurrentStep(currentStep + 1);
+        setShowValidationError(false);
+      }
+    } else {
+      // If not valid, show validation error
+      setShowValidationError(true);
+      
+      // Auto-hide the error message after 3 seconds
+      setTimeout(() => {
+        setShowValidationError(false);
+      }, 3000);
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      setShowValidationError(false);
     }
   };
 
@@ -114,21 +138,32 @@ export default function NotaFiscal() {
             steps={steps}
             setCurrentStep={setCurrentStep}
             currentStep={currentStep}
+            stepValidation={stepValidation}
           />
 
           {/* Step Content */}
           <div
             className="flex flex-col w-full min-h-fit space-y-8"
           >
-            {
-              steps[currentStep - 1].component(
-                {
-                  formData: formData,
-                  handleInputChange: handleInputChange,
-                  className: "flex flex-col space-y-8 w-full max-h-fit"
-                }
-              )
-            }
+            {(() => {
+              const StepComponent = steps[currentStep - 1].component;
+              return (
+                <StepComponent
+                  formData={formData}
+                  handleInputChange={handleInputChange}
+                  className="flex flex-col space-y-8 w-full max-h-fit"
+                  onValidationChange={(isValid) => handleValidationChange(currentStep, isValid)}
+                />
+              );
+            })()}
+            
+            {/* Validation Error Message */}
+            {showValidationError && (
+              <div className="bg-red-100 text-red-700 px-4 py-3 rounded-2xl relative" role="alert">
+                <strong className="font-bold">Atenção! </strong>
+                <span className="block sm:inline">Por favor, preencha todos os campos obrigatórios antes de avançar.</span>
+              </div>
+            )}
 
             {/* Navigation Buttons */}
             <div className="flex">
@@ -156,8 +191,6 @@ export default function NotaFiscal() {
           </div>
         </main>
       </div>
-
-      <Footer/>
     </div>
   );
 }

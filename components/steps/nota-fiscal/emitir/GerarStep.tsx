@@ -1,112 +1,451 @@
 'use client';
 
 import {Button} from "@/components/ui/button";
-import {FileText} from "lucide-react";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-
-import {Label} from "@/components/ui/label";
-
+import {Check, Printer} from "lucide-react";
+import {Card, CardContent} from "@/components/ui/card";
+import Image from "next/image";
 import {cn} from "@/lib/utils";
 import {StepComponentProps} from "@/types/Stepper";
+import {useEffect, useRef, useState} from "react";
+import {jsPDF} from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function GerarStep({
   formData, 
   handleInputChange, 
   className
 }: StepComponentProps) {
-  return (
-    <div className={cn("text-center", className)}>
-      <h2 className="text-3xl font-bold text-gray-900">Gerar Nota Fiscal</h2>
+  const [showPreview, setShowPreview] = useState<boolean>(true);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState<boolean>(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [hideDisclaimer, setHideDisclaimer] = useState<boolean>(false);
+  const printRef = useRef<HTMLDivElement>(null);
+  
+  // Format currency values
+  const formatCurrency = (value: string) => {
+    if (!value) return "R$ 0,00";
+    return `R$ ${value}`;
+  };
+  
+  // Handle PDF generation and download
+  const handleGeneratePDF = () => {
+    if (!printRef.current) return;
+    
+    // Set states for PDF generation
+    setIsGeneratingPDF(true);
+    setHideDisclaimer(true);
+    
+    // Add a class to the print container for PDF-specific styling
+    if (printRef.current) {
+      printRef.current.classList.add('generating-pdf');
+    }
+    
+    // Use setTimeout to ensure the disclaimer is hidden before generating the PDF
+    setTimeout(() => {
+      const element = printRef.current;
 
-      <div className="space-y-8">
-        <p className="text-gray-600 text-lg">
+
+      if (element) {
+        html2canvas(element, {
+          scale: 1.4,
+          useCORS: true,
+          logging: false,
+          windowWidth: 800
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/jpeg', 0.95);
+          const pdf = new jsPDF({
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            compress: true,
+            precision: 16
+          });
+
+          const imgWidth = 210 - 2 * 3; // A4 width (210mm) minus margins
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+
+          pdf.addImage(imgData, 'JPEG', 3, 3, imgWidth, imgHeight);
+          pdf.save(`nota-fiscal-${new Date().toISOString().split('T')[0]}.pdf`);
+
+          setHideDisclaimer(false);
+          setIsGeneratingPDF(false);
+          setShowSuccessMessage(true);
+
+          if (printRef.current) {
+            printRef.current.classList.remove('generating-pdf');
+          }
+
+          setTimeout(() => {
+            setShowSuccessMessage(false);
+          }, 3000);
+        });
+      }
+    }, 100);
+  };
+  
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.id = 'pdf-print-styles';
+    style.innerHTML = `
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        .print-container, .print-container * {
+          visibility: visible;
+        }
+        .print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        /* Ensure colors and backgrounds print correctly */
+        .print-container * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+        /* Remove any page margins from the browser print settings */
+        @page {
+          margin: 0;
+          size: auto;
+        }
+        /* Specific styles for PDF content to ensure it fits on one page */
+        .pdf-content {
+          max-height: 100%;
+          font-size: 9pt !important;
+          line-height: 1.2 !important;
+        }
+        .pdf-content h1 {
+          font-size: 14pt !important;
+        }
+        .pdf-content h2 {
+          font-size: 11pt !important;
+          margin-bottom: 4px !important;
+        }
+        .pdf-content h3 {
+          font-size: 10pt !important;
+          margin-bottom: 2px !important;
+        }
+        .pdf-content p {
+          margin-bottom: 2px !important;
+        }
+        .pdf-content .mb-2 {
+          margin-bottom: 4px !important;
+        }
+        .pdf-content .p-3 {
+          padding: 6px !important;
+        }
+        .pdf-content .gap-3 {
+          gap: 6px !important;
+        }
+        .pdf-content .rounded-md {
+          border-radius: 2px !important;
+        }
+        
+        /* Additional styles for when actively generating PDF */
+        .generating-pdf .pdf-content {
+          font-size: 8pt !important;
+          line-height: 1.1 !important;
+          transform: scale(0.98);
+          transform-origin: top center;
+        }
+        .generating-pdf .pdf-content h1 {
+          font-size: 12pt !important;
+        }
+        .generating-pdf .pdf-content h2 {
+          font-size: 10pt !important;
+          margin-bottom: 2px !important;
+        }
+        .generating-pdf .pdf-content .p-3 {
+          padding: 4px !important;
+        }
+        .generating-pdf .pdf-content .gap-3 {
+          gap: 4px !important;
+        }
+        .generating-pdf .pdf-content .mb-2 {
+          margin-bottom: 2px !important;
+        }
+        .generating-pdf .pdf-content .border {
+          border-width: 0.5px !important;
+        }
+        
+        /* Handle conditional sections to ensure they fit */
+        @media print {
+          .generating-pdf .pdf-content {
+            max-height: 100vh;
+            overflow: hidden;
+          }
+        }
+      }
+    `;
+    
+    // Add the style element to the document head
+    document.head.appendChild(style);
+    
+    // Clean up the style element when the component unmounts
+    return () => {
+      const existingStyle = document.getElementById('pdf-print-styles');
+      if (existingStyle) {
+        document.head.removeChild(existingStyle);
+      }
+    };
+  }, []);
+
+  return (
+    <div className={cn("", className)}>
+      <h2 className="text-3xl font-bold text-gray-900 text-center">Gerar Nota Fiscal</h2>
+
+      <div
+        style={{margin: 0}}
+        className="flex flex-col items-center mt-0"
+      >
+        <p className="text-gray-600 text-lg text-center mt-2">
           Revise todas as informações antes de gerar a nota fiscal.
         </p>
 
-        <div className="flex justify-center space-x-6">
+        {/* Preview da Nota Fiscal */}
+        {showPreview && (
+          <div ref={printRef} className="print-container overflow-hidden">
+            <Card className="border border-gray-200 mt-6 shadow-none max-w-4xl mx-auto overflow-hidden pdf-content">
+              {/* Header with logo and title */}
+              <div className="bg-black-50 border-b border-black-100 p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <Image 
+                      src="/images/logo.png" 
+                      alt="Logo" 
+                      width={80} 
+                      height={40} 
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                  <div className="flex-1 text-center">
+                    <h1 className="text-xl font-bold text-black-800 uppercase tracking-wide">
+                      Nota Fiscal de Serviços Eletrônica
+                    </h1>
+                    <p className="text-xs text-gray-500">NFS-e</p>
+                  </div>
+                  <div className="flex-1 text-right">
+                    <p className="text-xs text-gray-500">Data de Emissão</p>
+                    <p className="font-medium text-sm">{new Date().toLocaleDateString('pt-BR')}</p>
+                    <p className="text-xs text-gray-500 mt-1">Número</p>
+                    <p className="font-medium text-sm">00001</p>
+                  </div>
+                </div>
+              </div>
+              
+              <CardContent className="p-0">
+                {/* Prestador de Serviços */}
+                <div className="p-3 border-b border-gray-200">
+                  <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Prestador de Serviços</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Razão Social</p>
+                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "RR COSTA CONSULTORIA EM SISTEMAS"}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">{formData.tipoPessoa === 'cpf' ? 'CPF' : 'CNPJ'}</p>
+                        <p className="font-medium text-sm">{formData.tipoPessoa === 'cpf' ? formData.cpf : formData.cnpj || "36.249.383/0001-76"}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Inscrição Municipal</p>
+                        <p className="font-medium text-sm">30443000</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Endereço</p>
+                        <p className="font-medium text-sm">{`${formData.logradouro || "RUA CRUZEIRO RIBEIRO"}, ${formData.numero || "590"}`}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Bairro / CEP</p>
+                        <p className="font-medium text-sm">{`${formData.bairro || "BAIRRO SANTA MÔNICA SETOR C - LOTE(A)"} / ${formData.cep || "38408-242"}`}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Cidade / UF</p>
+                        <p className="font-medium text-sm">{`${formData.municipio || "UBERLÂNDIA"} / ${formData.estado || "MG"}`}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tomador de Serviços */}
+                <div className="p-3 border-b border-gray-200 bg-gray-50">
+                  <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Tomador de Serviços</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Nome/Razão Social</p>
+                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "Cliente"}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">{formData.tipoPessoa === 'cpf' ? 'CPF' : 'CNPJ'}</p>
+                        <p className="font-medium text-sm">{formData.tipoPessoa === 'cpf' ? formData.cpf : formData.cnpj || "-"}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Endereço</p>
+                        <p className="font-medium text-sm">{`${formData.logradouro || "-"}, ${formData.numero || "-"} - ${formData.bairro || "-"}`}</p>
+                      </div>
+                      <div className="mb-2">
+                        <p className="text-xs text-gray-500">Cidade/UF</p>
+                        <p className="font-medium text-sm">{`${formData.municipio || "-"}/${formData.estado || "-"}`}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Discriminação dos Serviços */}
+                <div className="p-3 border-b border-gray-200">
+                  <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Discriminação dos Serviços</h2>
+                  <div className="bg-white border border-gray-200 rounded-md p-2">
+                    <p className="text-xs leading-tight">
+                      {formData.discriminacao || formData.listaServico || ""}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Valores */}
+                <div className="p-3 border-b border-gray-200 bg-gray-50">
+                  <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Valores</h2>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-white border border-gray-200 rounded-md p-2 text-center">
+                      <p className="text-xs text-gray-500">BASE DE CÁLCULO</p>
+                      <p className="text-sm font-bold text-black-800">{formatCurrency(formData.valorServico)}</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-md p-2 text-center">
+                      <p className="text-xs text-gray-500">VALOR SERVIÇO</p>
+                      <p className="text-sm font-bold text-black-800">{formatCurrency(formData.valorServico)}</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-md p-2 text-center">
+                      <p className="text-xs text-gray-500">ALÍQUOTA</p>
+                      <p className="text-sm font-bold text-black-800">{formData.aliquota ? `${formData.aliquota}%` : "5%"}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* ISS e Retenções Federais */}
+                <div className="p-3 border-b border-gray-200">
+                  <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">ISS e Retenções Federais</h2>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white border border-gray-200 rounded-md p-2">
+                      <p className="text-xs text-gray-500">ISS</p>
+                      <p className="font-medium text-sm">{formatCurrency(formData.iss)}</p>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-md p-2">
+                      <p className="text-xs text-gray-500">ISS Retido</p>
+                      <p className="font-medium text-sm">{formData.issRetido === 'sim' ? 'SIM' : 'NÃO'}</p>
+                    </div>
+                  </div>
+                  
+                  {(formData.pis || formData.cofins || formData.ir || formData.csll || formData.inss) && (
+                    <div className="mt-2">
+                      <h3 className="text-xs font-semibold mb-1">Retenções Federais</h3>
+                      <div className="grid grid-cols-5 gap-2">
+                        {formData.pis && (
+                          <div className="bg-white border border-gray-200 rounded-md p-1">
+                            <p className="text-xs text-gray-500">PIS</p>
+                            <p className="font-medium text-xs">{formatCurrency(formData.pis)}</p>
+                          </div>
+                        )}
+                        {formData.cofins && (
+                          <div className="bg-white border border-gray-200 rounded-md p-1">
+                            <p className="text-xs text-gray-500">COFINS</p>
+                            <p className="font-medium text-xs">{formatCurrency(formData.cofins)}</p>
+                          </div>
+                        )}
+                        {formData.ir && (
+                          <div className="bg-white border border-gray-200 rounded-md p-1">
+                            <p className="text-xs text-gray-500">IR</p>
+                            <p className="font-medium text-xs">{formatCurrency(formData.ir)}</p>
+                          </div>
+                        )}
+                        {formData.csll && (
+                          <div className="bg-white border border-gray-200 rounded-md p-1">
+                            <p className="text-xs text-gray-500">CSLL</p>
+                            <p className="font-medium text-xs">{formatCurrency(formData.csll)}</p>
+                          </div>
+                        )}
+                        {formData.inss && (
+                          <div className="bg-white border border-gray-200 rounded-md p-1">
+                            <p className="text-xs text-gray-500">INSS</p>
+                            <p className="font-medium text-xs">{formatCurrency(formData.inss)}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Construção Civil */}
+                {formData.artOuN && (
+                  <div className="p-3 border-b border-gray-200 bg-gray-50">
+                    <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Construção Civil</h2>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="bg-white border border-gray-200 rounded-md p-2">
+                        <p className="text-xs text-gray-500">ART OU N° Projeto</p>
+                        <p className="font-medium text-sm">{formData.artOuN}</p>
+                      </div>
+                      <div className="bg-white border border-gray-200 rounded-md p-2">
+                        <p className="text-xs text-gray-500">Código da obra (CNO)</p>
+                        <p className="font-medium text-sm">{formData.codigoObra}</p>
+                      </div>
+                      <div className="bg-white border border-gray-200 rounded-md p-2">
+                        <p className="text-xs text-gray-500">Deduções</p>
+                        <p className="font-medium text-sm">{formatCurrency(formData.deducoes)}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Outras Informações */}
+                {formData.outrasInformacoes && (
+                  <div className="p-3 border-b border-gray-200">
+                    <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Outras Informações</h2>
+                    <div className="bg-white border border-gray-200 rounded-md p-2">
+                      <p className="text-xs">{formData.outrasInformacoes}</p>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Footer */}
+                <div className="p-3 text-center text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
+                  <p>Documento emitido em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
+                  {!hideDisclaimer && (
+                    <p>Este documento não possui valor fiscal</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Success message */}
+        {showSuccessMessage && (
+          <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-md flex items-center">
+            <Check className="w-5 h-5 mr-2" />
+            <span>PDF gerado com sucesso!</span>
+          </div>
+        )}
+
+        {/* Buttons */}
+        <div className="mt-8 flex space-x-4">
 
           <Button
-            className="flex items-center space-x-3 px-8 py-3 rounded-full bg-primary-600 hover:from-primary-700 hover:to-primary-800"
+            onClick={handleGeneratePDF}
+            disabled={isGeneratingPDF}
           >
-            <FileText className="w-5 h-5"/>
-            <span>Gerar</span>
+            <Printer className="w-5 h-5 mr-2"/>
+            <span>{isGeneratingPDF ? 'Gerando...' : 'Gerar'}</span>
           </Button>
         </div>
-
-        {/* Preview da Nota Fiscal */}
-        <Card className="border-0 mt-12">
-          <CardHeader>
-            <CardTitle className="text-center text-xl font-bold text-primary-700">
-              NOTA FISCAL DE SERVIÇOS ELETRÔNICA - NFS-e
-            </CardTitle>
-            <p className="text-center text-lg font-semibold">RR COSTA CONSULTORIA EM SISTEMAS</p>
-          </CardHeader>
-          <CardContent className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div>
-                  <Label className="font-semibold">Razão Social</Label>
-                  <p>RR COSTA CONSULTORIA EM SISTEMAS</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">CPF/CNPJ</Label>
-                  <p>36.249.383/0001-76</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">Inscrição Municipal</Label>
-                  <p>30443000</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">Logradouro</Label>
-                  <p>RUA CRUZEIRO RIBEIRO</p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <Label className="font-semibold">Bairro</Label>
-                  <p>BAIRRO SANTA MÔNICA SETOR C - LOTE(A)</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">Número</Label>
-                  <p>590</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">CEP</Label>
-                  <p>38408-242</p>
-                </div>
-                <div>
-                  <Label className="font-semibold">Cidade</Label>
-                  <p>UBERLÂNDIA</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 p-6 bg-primary-50 rounded-full">
-              <h3 className="font-bold text-lg mb-4">DISCRIMINAÇÃO DOS SERVIÇOS</h3>
-              <p className="text-sm">
-                14.01 - LUBRIFICAÇÃO, LIMPEZA, LUSTRAÇÃO, REVISÃO, CARGA E RECARGA, CONSERTO, RESTAURAÇÃO,
-                BLINDAGEM, MANUTENÇÃO E CONSERVAÇÃO DE MÁQUINAS, VEÍCULOS, APARELHOS, EQUIPAMENTOS,
-                MOTORES, ELEVADORES OU DE QUALQUER OBJETO (EXCETO PEÇAS E PARTES EMPREGADAS, QUE
-                FICAM SUJEITAS AO ICMS).
-              </p>
-            </div>
-
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <Label className="font-semibold">BASE DE CÁLCULO</Label>
-                <p className="text-lg">R$ 4.000,00</p>
-              </div>
-              <div className="text-center">
-                <Label className="font-semibold">VALOR SERVIÇO</Label>
-                <p className="text-lg">R$ 4.000,00</p>
-              </div>
-              <div className="text-center">
-                <Label className="font-semibold">ALÍQUOTA</Label>
-                <p className="text-lg">5%</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

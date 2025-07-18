@@ -7,13 +7,15 @@ import {Dispatch, SetStateAction, useRef, useEffect, useState} from "react";
 interface StepperProps {
   steps: Step[],
   setCurrentStep(value: number | ((prev: number) => number)): void,
-  currentStep: number
+  currentStep: number,
+  stepValidation?: Record<number, boolean>
 }
 
 export default function Stepper({
   steps,
   setCurrentStep,
-  currentStep
+  currentStep,
+  stepValidation = {}
 }: StepperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -49,10 +51,21 @@ export default function Stepper({
         <button
           key={index}
           ref={el => stepRefs.current[index] = el}
-          onClick={() => setCurrentStep(step.id)}
+          onClick={() => {
+
+            // if (
+            //   step.id === 1 ||
+            //   step.id < currentStep ||
+            //   (step.id === currentStep + 1 && stepValidation[currentStep]) ||
+            //   (step.id > currentStep + 1 && Array.from({length: step.id - 1}, (_, i) => i + 1).every(id => stepValidation[id]))
+            // ) {
+              setCurrentStep(step.id);
+            // }
+          }}
           className={
             `flex items-center bg-background w-fit z-50
               ${index > 0 && 'pl-3'}
+              ${step.id > currentStep && !stepValidation[currentStep] ? 'cursor-not-allowed' : 'cursor-pointer'}
             `}
         >
           <div

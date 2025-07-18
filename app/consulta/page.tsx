@@ -77,7 +77,7 @@ export default function Consulta() {
 
   return (
     <div className="min-h-screen">
-      <div className="flex items-stretch shadow-lg">
+      <div className="flex min-h-full items-stretch">
         {/* Sidebar */}
         <Sidebar/>
 
@@ -87,7 +87,7 @@ export default function Consulta() {
           <div className="mb-2">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 font-medium">
-                <span>105 COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
+                <span>R COSTA CONSULTORIA EM SISTEMAS - CNPJ: 36.249.383/0001-76 - 34.3613.4600</span>
               </div>
               <div className="flex items-center space-x-4">
                 <Button variant="translucid" size="sm">
@@ -116,7 +116,6 @@ export default function Consulta() {
           <RecentActivity />
         </main>
       </div>
-      <Footer/>
     </div>
   );
 }

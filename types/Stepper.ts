@@ -10,5 +10,6 @@ export interface Step {
 export interface StepComponentProps {
   formData: any,
   handleInputChange(field: string, value: string): void,
-  className: string
+  className: string,
+  onValidationChange?: (isValid: boolean) => void
 }
