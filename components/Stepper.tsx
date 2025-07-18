@@ -53,14 +53,14 @@ export default function Stepper({
           ref={el => stepRefs.current[index] = el}
           onClick={() => {
 
-            // if (
-            //   step.id === 1 ||
-            //   step.id < currentStep ||
-            //   (step.id === currentStep + 1 && stepValidation[currentStep]) ||
-            //   (step.id > currentStep + 1 && Array.from({length: step.id - 1}, (_, i) => i + 1).every(id => stepValidation[id]))
-            // ) {
+            if (
+              step.id === 1 ||
+              step.id < currentStep ||
+              (step.id === currentStep + 1 && stepValidation[currentStep]) ||
+              (step.id > currentStep + 1 && Array.from({length: step.id - 1}, (_, i) => i + 1).every(id => stepValidation[id]))
+            ) {
               setCurrentStep(step.id);
-            // }
+            }
           }}
           className={
             `flex items-center bg-background w-fit z-50
