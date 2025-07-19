@@ -210,9 +210,24 @@ export default function GerarStep({
         {/* Preview da Nota Fiscal */}
         {showPreview && (
           <div ref={printRef} className="print-container overflow-hidden">
-            <Card className="border border-gray-200 mt-6 shadow-none max-w-4xl mx-auto overflow-hidden pdf-content">
-              {/* Header with logo and title */}
-              <div className="bg-black-50 border-b border-black-100 p-3">
+            <Card className="border border-gray-200 mt-6 shadow-none max-w-4xl mx-auto overflow-hidden pdf-content relative">
+              {!hideDisclaimer && (
+                <div
+                  className="
+                    absolute top-0 left-0 right-0 z-10
+                    opacity-10
+                    w-full h-full
+                    flex flex-col items-center justify-center
+                  "
+                >
+                  <div className="flex flex-col items-center justify-center -rotate-[60deg]">
+                    <span className="text-7xl font-semibold">VISUALIZAÇÃO</span>
+                    <span className="text-5xl font-semibold">SEM VALOR FISCAL</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-black-50 border-b border-black-100 p-3 z-50">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <Image 
@@ -418,9 +433,6 @@ export default function GerarStep({
                 {/* Footer */}
                 <div className="p-3 text-center text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
                   <p>Documento emitido em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
-                  {!hideDisclaimer && (
-                    <p>Este documento não possui valor fiscal</p>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -436,14 +448,23 @@ export default function GerarStep({
         )}
 
         {/* Buttons */}
-        <div className="mt-8 flex space-x-4">
-
+        <div className="mt-8 flex">
           <Button
             onClick={handleGeneratePDF}
             disabled={isGeneratingPDF}
           >
-            <Printer className="w-5 h-5 mr-2"/>
-            <span>{isGeneratingPDF ? 'Gerando...' : 'Gerar'}</span>
+            {isGeneratingPDF ? (
+                <>
+                  <div className="animate-spin rounded-full w-4 h-4 border-2 border-white border-b-transparent mr-2"></div>
+                  <span>Gerando...</span>
+                </>
+              ) : (
+                <>
+                  <span>Gerar</span>
+                  <Check className="w-4 h-4 ml-2" />
+                </>
+              )
+            }
           </Button>
         </div>
       </div>
