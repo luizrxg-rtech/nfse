@@ -126,12 +126,12 @@ export default function NotaFiscal() {
   }, [currentStep]);
 
   return (
-    <div id="page" className="max-h-screen overflow-y-auto">
-      <div className="flex ">
+    <div id="page" className="h-screen">
+      <div className="flex h-full">
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex flex-col w-full p-8 gap-4">
+        <main className="flex flex-col w-full p-8 gap-4 ml-[360px] overflow-y-auto h-screen">
 
           {/* Steps Navigation */}
           <Stepper
@@ -143,7 +143,7 @@ export default function NotaFiscal() {
 
           {/* Step Content */}
           <div
-            className="flex flex-col w-full min-h-fit space-y-8"
+            className="flex flex-col w-full flex-grow space-y-8"
           >
             {(() => {
               const StepComponent = steps[currentStep - 1].component;
@@ -166,7 +166,7 @@ export default function NotaFiscal() {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex">
+            <div className="flex pb-8">
               {currentStep > 1 &&
                 <Button
                   variant="translucid"

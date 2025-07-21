@@ -10,7 +10,7 @@ import {cn} from "@/lib/utils";
 import {StepComponentProps} from "@/types/Stepper";
 import StepSectionCard from "@/components/StepSectionCard";
 import ValidatedInput from "@/components/ValidatedInput";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import RadioOptions from "@/components/RadioOptions";
 import {Plus, X} from "lucide-react";
 
@@ -55,10 +55,35 @@ export default function ServicosStep({
   // State for detalhamento checkbox
   const [detalhamento, setDetalhamento] = useState<boolean>(false);
 
-  // Validate fields when formData changes
+  // Use refs to track state and prevent infinite loops
+  const validationNeededRef = useRef(true);
+  const prevValidRef = useRef(false);
+  
+  // Validate fields when relevant formData fields change
   useEffect(() => {
-    validateFields();
-  }, [formData]);
+    // Only run validation if needed
+    if (validationNeededRef.current) {
+      validationNeededRef.current = false;
+      validateFields();
+    }
+  }, [
+    // Only depend on specific formData fields that are used in validation
+    formData.valorServico, formData.codigoTributacao, formData.codigoCnae, formData.listaServico,
+    formData.naturezaOperacao, formData.regimeEspecial, formData.localPrestacao, formData.aliquota,
+    formData.discriminacao, formData.tributavel,
+    // Other dependencies
+    detalhamento, serviceItems.length
+  ]);
+  
+  // Reset validation needed flag when dependencies change
+  useEffect(() => {
+    validationNeededRef.current = true;
+  }, [
+    formData.valorServico, formData.codigoTributacao, formData.codigoCnae, formData.listaServico,
+    formData.naturezaOperacao, formData.regimeEspecial, formData.localPrestacao, formData.aliquota,
+    formData.discriminacao, formData.tributavel,
+    detalhamento, serviceItems.length
+  ]);
 
   // Calculate total value of all service items
   const calculateTotalValue = useCallback(() => {
@@ -91,88 +116,114 @@ export default function ServicosStep({
   }, []);
 
   // Auto-calculate total value when quantity or unit value changes
+  // Using a ref to track previous values to prevent unnecessary updates
+  const prevQuantityRef = useRef(formData.quantidade);
+  const prevValorUnitarioRef = useRef(formData.valorUnitario);
+  
   useEffect(() => {
-    if (formData.quantidade && formData.valorUnitario) {
+    // Only update if quantity or unit value has actually changed
+    if (formData.quantidade && formData.valorUnitario && 
+        (formData.quantidade !== prevQuantityRef.current || 
+         formData.valorUnitario !== prevValorUnitarioRef.current)) {
+      
       const total = calculateItemTotal(formData.quantidade, formData.valorUnitario);
-      handleInputChange('valorTotal', total);
+      
+      // Update refs with current values
+      prevQuantityRef.current = formData.quantidade;
+      prevValorUnitarioRef.current = formData.valorUnitario;
+      
+      // Only update if the calculated total is different from current valorTotal
+      if (total !== formData.valorTotal) {
+        handleInputChange('valorTotal', total);
+      }
     }
-  }, [formData.quantidade, formData.valorUnitario, calculateItemTotal, handleInputChange]);
+  }, [formData.quantidade, formData.valorUnitario, formData.valorTotal, calculateItemTotal, handleInputChange]);
 
   // Report validation status to parent component
   useEffect(() => {
     // Step is valid if at least one card is valid
     const isStepValid = cardValidation[1] || cardValidation[2] || cardValidation[3];
     
-    if (onValidationChange) {
+    // Only call onValidationChange if validation state has changed
+    if (onValidationChange && prevValidRef.current !== isStepValid) {
+      prevValidRef.current = isStepValid;
       onValidationChange(isStepValid);
     }
   }, [cardValidation, onValidationChange]);
 
   // Validate all fields and update errors state
+  // Define validateFields after the useEffect that uses it to avoid reference errors
   const validateFields = useCallback(() => {
+    // Use a local copy of formData to prevent dependency on the entire object
+    const {
+      valorServico, codigoTributacao, codigoCnae, listaServico,
+      naturezaOperacao, regimeEspecial, localPrestacao, aliquota,
+      discriminacao, tributavel
+    } = formData;
+    
     const newErrors: Record<string, string> = {};
     let valorAtividadeValid = true;
     let tributacaoLocalValid = true;
     let discriminacaoItensValid = true;
 
     // Validate Valor e Atividade fields
-    const valorServicoError = validateNumber(formData.valorServico, "Valor Serviço");
+    const valorServicoError = validateNumber(valorServico, "Valor Serviço");
     if (valorServicoError) {
       newErrors.valorServico = valorServicoError;
       valorAtividadeValid = false;
     }
 
-    const codigoTributacaoError = validateRequired(formData.codigoTributacao, "Código de Tributação Municipal");
+    const codigoTributacaoError = validateRequired(codigoTributacao, "Código de Tributação Municipal");
     if (codigoTributacaoError) {
       newErrors.codigoTributacao = codigoTributacaoError;
       valorAtividadeValid = false;
     }
 
-    const codigoCnaeError = validateRequired(formData.codigoCnae, "Código CNAE");
+    const codigoCnaeError = validateRequired(codigoCnae, "Código CNAE");
     if (codigoCnaeError) {
       newErrors.codigoCnae = codigoCnaeError;
       valorAtividadeValid = false;
     }
 
-    const listaServicoError = validateRequired(formData.listaServico, "Lista de Serviço");
+    const listaServicoError = validateRequired(listaServico, "Lista de Serviço");
     if (listaServicoError) {
       newErrors.listaServico = listaServicoError;
       valorAtividadeValid = false;
     }
 
     // Validate Tributação e Local fields
-    const naturezaOperacaoError = validateRequired(formData.naturezaOperacao, "Natureza da Operação");
+    const naturezaOperacaoError = validateRequired(naturezaOperacao, "Natureza da Operação");
     if (naturezaOperacaoError) {
       newErrors.naturezaOperacao = naturezaOperacaoError;
       tributacaoLocalValid = false;
     }
 
-    const regimeEspecialError = validateRequired(formData.regimeEspecial, "Regime Especial Tributação");
+    const regimeEspecialError = validateRequired(regimeEspecial, "Regime Especial Tributação");
     if (regimeEspecialError) {
       newErrors.regimeEspecial = regimeEspecialError;
       tributacaoLocalValid = false;
     }
 
-    const localPrestacaoError = validateRequired(formData.localPrestacao, "Local da Prestação");
+    const localPrestacaoError = validateRequired(localPrestacao, "Local da Prestação");
     if (localPrestacaoError) {
       newErrors.localPrestacao = localPrestacaoError;
       tributacaoLocalValid = false;
     }
 
-    const aliquotaError = validateNumber(formData.aliquota, "Alíquota");
+    const aliquotaError = validateNumber(aliquota, "Alíquota");
     if (aliquotaError) {
       newErrors.aliquota = aliquotaError;
       tributacaoLocalValid = false;
     }
 
     // Validate Discriminação e Itens fields
-    const discriminacaoError = validateRequired(formData.discriminacao, "Discriminação");
+    const discriminacaoError = validateRequired(discriminacao, "Discriminação");
     if (discriminacaoError) {
       newErrors.discriminacao = discriminacaoError;
       discriminacaoItensValid = false;
     }
 
-    const tributavelError = validateRequired(formData.tributavel, "Tributável");
+    const tributavelError = validateRequired(tributavel, "Tributável");
     if (tributavelError) {
       newErrors.tributavel = tributavelError;
       discriminacaoItensValid = false;
@@ -185,24 +236,45 @@ export default function ServicosStep({
     }
 
     // Validate that valor serviço matches the sum of all item values when detalhamento is checked
-    if (detalhamento && serviceItems.length > 0 && formData.valorServico) {
+    if (detalhamento && serviceItems.length > 0 && valorServico) {
       const totalItems = calculateTotalValue();
-      const valorServico = formData.valorServico.replace(/[^\d,]/g, '').replace(',', '.');
+      const valorServicoFormatted = valorServico.replace(/[^\d,]/g, '').replace(',', '.');
       
       // Compare the values (convert to numbers for comparison)
-      if (parseFloat(totalItems.replace(',', '.')) !== parseFloat(valorServico)) {
+      if (parseFloat(totalItems.replace(',', '.')) !== parseFloat(valorServicoFormatted)) {
         newErrors.valorMatch = "O valor do serviço deve ser igual à soma dos valores dos itens";
         discriminacaoItensValid = false;
       }
     }
 
-    setErrors(newErrors);
-    setCardValidation({
+    // Create new card validation state
+    const newCardValidation = {
       1: valorAtividadeValid,
       2: tributacaoLocalValid,
       3: discriminacaoItensValid
-    });
-  }, [formData, detalhamento, serviceItems.length, calculateTotalValue]);
+    };
+    
+    // Only update state if there are actual changes to prevent unnecessary re-renders
+    const errorsChanged = JSON.stringify(newErrors) !== JSON.stringify(errors);
+    const validationChanged = JSON.stringify(newCardValidation) !== JSON.stringify(cardValidation);
+    
+    if (errorsChanged) {
+      setErrors(newErrors);
+    }
+    
+    if (validationChanged) {
+      setCardValidation(newCardValidation);
+    }
+  }, [
+    // Only depend on specific formData fields that are used in validation
+    formData.valorServico, formData.codigoTributacao, formData.codigoCnae, formData.listaServico,
+    formData.naturezaOperacao, formData.regimeEspecial, formData.localPrestacao, formData.aliquota,
+    formData.discriminacao, formData.tributavel,
+    // Other dependencies
+    detalhamento, serviceItems.length, calculateTotalValue,
+    // Include current state for comparison
+    errors, cardValidation
+  ]);
 
   const handleCardToggle = (cardIndex: number) => {
     setExpandedCard(expandedCard === cardIndex ? 0 : cardIndex);
@@ -389,6 +461,7 @@ export default function ServicosStep({
               <div className="space-y-3">
                 <ValidatedInput
                   id="aliquota"
+                  type="number"
                   label="Alíquota (%)"
                   value={formData.aliquota}
                   onChange={(e) => handleInputChange('aliquota', e.target.value)}

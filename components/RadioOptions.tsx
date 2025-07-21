@@ -37,7 +37,9 @@ export default function RadioOptions({
     )
   }
 
-  const selectedValueIndex = values.indexOf(values.find((i) => i.buttonValue === value)!!)
+  // Find the index of the selected value, defaulting to 0 if not found
+  const foundValue = values.find((i) => i.buttonValue === value);
+  const selectedValueIndex = foundValue ? values.indexOf(foundValue) : 0;
 
   return (
     <div className="flex flex-col items-start gap-2">

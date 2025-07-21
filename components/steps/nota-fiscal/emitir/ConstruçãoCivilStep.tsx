@@ -15,7 +15,8 @@ const validateRequired = (value: string, fieldName: string) => {
 export default function ConstruOCivilStep({
   formData, 
   handleInputChange, 
-  className
+  className,
+  onValidationChange
 }: StepComponentProps) {
   const [expandedCard, setExpandedCard] = useState<number>(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -31,31 +32,40 @@ export default function ConstruOCivilStep({
   // Validate all fields and update errors state
   const validateFields = () => {
     const newErrors: Record<string, string> = {};
-    let construcaoCivilValid = true;
+    
+    // Store validation state for UI feedback, but don't make it required
+    let fieldsFilledIn = true;
 
-    // Validate Construção Civil fields
+    // Check if fields are filled in (for UI feedback only)
     const artOuNError = validateRequired(formData.artOuN, "ART OU N° Projeto");
     if (artOuNError) {
       newErrors.artOuN = artOuNError;
-      construcaoCivilValid = false;
+      fieldsFilledIn = false;
     }
 
     const codigoObraError = validateRequired(formData.codigoObra, "Código da obra");
     if (codigoObraError) {
       newErrors.codigoObra = codigoObraError;
-      construcaoCivilValid = false;
+      fieldsFilledIn = false;
     }
 
     const deducoesError = validateRequired(formData.deducoes, "Deduções");
     if (deducoesError) {
       newErrors.deducoes = deducoesError;
-      construcaoCivilValid = false;
+      fieldsFilledIn = false;
     }
 
     setErrors(newErrors);
+    
+    // Set card validation based on whether fields are filled in (for UI feedback)
     setCardValidation({
-      1: construcaoCivilValid
+      1: fieldsFilledIn
     });
+    
+    // Always return true for step validation since this step is optional
+    if (onValidationChange) {
+      onValidationChange(true);
+    }
   };
 
   const handleCardToggle = (cardIndex: number) => {
@@ -95,7 +105,6 @@ export default function ConstruOCivilStep({
             value={formData.artOuN}
             onChange={(e) => handleInputChange('artOuN', e.target.value)}
             placeholder="Digite o número"
-            required
           />
           <ValidatedInput
             id="codigo-obra"
@@ -103,7 +112,6 @@ export default function ConstruOCivilStep({
             value={formData.codigoObra}
             onChange={(e) => handleInputChange('codigoObra', e.target.value)}
             placeholder="Digite o código"
-            required
           />
         </div>
 
@@ -114,7 +122,6 @@ export default function ConstruOCivilStep({
             value={formData.deducoes}
             onChange={(e) => handleInputChange('deducoes', e.target.value)}
             placeholder="R$ 0,00"
-            required
           />
         </div>
       </StepSectionCard>

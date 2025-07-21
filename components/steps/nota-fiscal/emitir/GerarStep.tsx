@@ -9,6 +9,7 @@ import {StepComponentProps} from "@/types/Stepper";
 import {useEffect, useRef, useState} from "react";
 import {jsPDF} from 'jspdf';
 import html2canvas from 'html2canvas';
+import QRCode from "@/components/QRCode";
 
 export default function GerarStep({
   formData, 
@@ -228,7 +229,7 @@ export default function GerarStep({
               )}
 
               <div className="bg-black-50 border-b border-black-100 p-3 z-50">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-6">
                   <div className="flex-1">
                     <Image 
                       src="/images/logo.png" 
@@ -239,17 +240,24 @@ export default function GerarStep({
                       priority
                     />
                   </div>
-                  <div className="flex-1 text-center">
+                  <div className="flex-1 text-left">
                     <h1 className="text-xl font-bold text-black-800 uppercase tracking-wide">
                       Nota Fiscal de Serviços Eletrônica
                     </h1>
-                    <p className="text-xs text-gray-500">NFS-e</p>
                   </div>
                   <div className="flex-1 text-right">
                     <p className="text-xs text-gray-500">Data de Emissão</p>
                     <p className="font-medium text-sm">{new Date().toLocaleDateString('pt-BR')}</p>
                     <p className="text-xs text-gray-500 mt-1">Número</p>
                     <p className="font-medium text-sm">00001</p>
+                  </div>
+                  <div className="">
+                    <QRCode
+                      value={`NFS-e:00001:${formData.valorServico}:${new Date().toISOString()}`}
+                      size={80}
+                      className="ml-auto mb-1"
+                    />
+                    <p className="text-xs font-medium">Código de Validação</p>
                   </div>
                 </div>
               </div>
@@ -262,11 +270,11 @@ export default function GerarStep({
                     <div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Razão Social</p>
-                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "RR COSTA CONSULTORIA EM SISTEMAS"}</p>
+                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "-"}</p>
                       </div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">{formData.tipoPessoa === 'cpf' ? 'CPF' : 'CNPJ'}</p>
-                        <p className="font-medium text-sm">{formData.tipoPessoa === 'cpf' ? formData.cpf : formData.cnpj || "36.249.383/0001-76"}</p>
+                        <p className="font-medium text-sm">{formData.tipoPessoa === 'cpf' ? formData.cpf : formData.cnpj || "-"}</p>
                       </div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Inscrição Municipal</p>
@@ -276,15 +284,15 @@ export default function GerarStep({
                     <div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Endereço</p>
-                        <p className="font-medium text-sm">{`${formData.logradouro || "RUA CRUZEIRO RIBEIRO"}, ${formData.numero || "590"}`}</p>
+                        <p className="font-medium text-sm">{`${formData.logradouro || "-"}, ${formData.numero || "-"}`}</p>
                       </div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Bairro / CEP</p>
-                        <p className="font-medium text-sm">{`${formData.bairro || "BAIRRO SANTA MÔNICA SETOR C - LOTE(A)"} / ${formData.cep || "38408-242"}`}</p>
+                        <p className="font-medium text-sm">{`${formData.bairro || "-"} / ${formData.cep || "-"}`}</p>
                       </div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Cidade / UF</p>
-                        <p className="font-medium text-sm">{`${formData.municipio || "UBERLÂNDIA"} / ${formData.estado || "MG"}`}</p>
+                        <p className="font-medium text-sm">{`${formData.municipio || "-"} / ${formData.estado || "-"}`}</p>
                       </div>
                     </div>
                   </div>
@@ -297,7 +305,7 @@ export default function GerarStep({
                     <div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">Nome/Razão Social</p>
-                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "Cliente"}</p>
+                        <p className="font-medium text-sm">{formData.nomeRazaoSocial || "-"}</p>
                       </div>
                       <div className="mb-2">
                         <p className="text-xs text-gray-500">{formData.tipoPessoa === 'cpf' ? 'CPF' : 'CNPJ'}</p>
@@ -322,7 +330,7 @@ export default function GerarStep({
                   <h2 className="text-sm font-bold text-black-800 mb-2 uppercase tracking-wide">Discriminação dos Serviços</h2>
                   <div className="bg-white border border-gray-200 rounded-md p-2">
                     <p className="text-xs leading-tight">
-                      {formData.discriminacao || formData.listaServico || ""}
+                      {formData.discriminacao || formData.listaServico || "-"}
                     </p>
                   </div>
                 </div>
@@ -431,8 +439,12 @@ export default function GerarStep({
                 )}
                 
                 {/* Footer */}
-                <div className="p-3 text-center text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
-                  <p>Documento emitido em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
+                <div className="p-3 text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="text-center flex-1">
+                      <p>Documento emitido em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

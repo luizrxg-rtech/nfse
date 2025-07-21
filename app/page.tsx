@@ -47,8 +47,8 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen">
-      <div className="city-background">
+    <div className="h-screen overflow-y-auto">
+      <div className="city-background h-full">
         <div className="bg-gradient-to-r from-primary-800/90 to-primary-900/90 backdrop-blur-xs ">
           <Header />
           <section className="flex flex-col items-center relative">

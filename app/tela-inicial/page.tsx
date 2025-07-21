@@ -64,10 +64,10 @@ export default function TelaInicial() {
   ]
 
   return (
-    <div className="min-h-screen">
-      <div className="flex min-h-full items-stretch">
+    <div className="h-screen">
+      <div className="flex h-full items-stretch">
         <Sidebar/>
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-8 ml-[360px] overflow-y-auto h-screen">
           <div className="mb-2">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 font-medium">

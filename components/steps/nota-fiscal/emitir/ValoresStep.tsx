@@ -24,7 +24,8 @@ const validateNumber = (value: string, fieldName: string) => {
 export default function ValoresStep({
   formData, 
   handleInputChange, 
-  className
+  className,
+  onValidationChange
 }: StepComponentProps) {
   const [expandedCard, setExpandedCard] = useState<number>(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -69,12 +70,20 @@ export default function ValoresStep({
     // For Outras Informações, we don't have required fields, so it's always valid
     outrasInfoValid = true;
 
-    setErrors(newErrors);
-    setCardValidation({
+    const newCardValidation = {
       1: valorServicoValid,
       2: issRetencoesValid,
       3: outrasInfoValid
-    });
+    };
+    
+    setErrors(newErrors);
+    setCardValidation(newCardValidation);
+    
+    // Communicate overall validation state to parent component
+    const isStepValid = valorServicoValid && issRetencoesValid && outrasInfoValid;
+    if (onValidationChange) {
+      onValidationChange(isStepValid);
+    }
   };
 
   const handleCardToggle = (cardIndex: number) => {

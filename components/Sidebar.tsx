@@ -146,7 +146,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-full overflow-hidden min-w-[360px] bg-white shadow-md">
+    <div className="flex flex-col fixed h-screen overflow-hidden min-w-[360px] bg-white shadow-md z-10">
       <CardHeader className="flex items-center space-x-3 p-6 border-b border-gray-200/50">
         <Image
           alt="Logo"
