@@ -49,6 +49,7 @@ export default function Nav() {
       />
       {links.map((link, index) =>
         <NextLink
+          key={index}
           id={index.toString()}
           href={link.href}
           onMouseEnter={() => handleLinkHover(index)}

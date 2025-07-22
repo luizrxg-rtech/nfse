@@ -95,7 +95,7 @@ export default function ValoresStep({
     // Only proceed if current card is valid
     if (cardValidation[currentCard]) {
       // Calculate the next card (wrap around to 1 if we're at the last card)
-      const nextCard = currentCard < 3 ? currentCard + 1 : 1;
+      const nextCard = currentCard < 3 ? currentCard + 1 : 0;
       setExpandedCard(nextCard);
     }
   };

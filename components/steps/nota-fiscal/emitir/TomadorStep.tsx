@@ -175,12 +175,9 @@ export default function TomadorStep({
     setExpandedCard(expandedCard === cardIndex ? 0 : cardIndex);
   };
   
-  // Function to handle moving to the next card when "Salvar" is clicked
   const handleConfirm = (currentCard: number) => {
-    // Only proceed if current card is valid
     if (cardValidation[currentCard]) {
-      // Calculate the next card (wrap around to 1 if we're at the last card)
-      const nextCard = currentCard < 3 ? currentCard + 1 : 1;
+      const nextCard = currentCard < 3 ? currentCard + 1 : 0;
       setExpandedCard(nextCard);
     }
   };

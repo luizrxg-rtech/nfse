@@ -27,7 +27,7 @@ export default function TelaInicial() {
       icon: CircleOff,
       color: 'red',
       path: '',
-      onClick: (path) => router.push(path),
+      // onClick: (path) => router.push(path),
     },
     {
       title: 'Consulta Rápida',
@@ -35,7 +35,7 @@ export default function TelaInicial() {
       icon: Search,
       color: 'fuchsia',
       path: '',
-      onClick: (path) => router.push(path),
+      // onClick: (path) => router.push(path),
     },
     {
       title: 'Reemitir',
@@ -43,7 +43,7 @@ export default function TelaInicial() {
       icon: Repeat,
       color: 'blue',
       path: '',
-      onClick: (path) => router.push(path),
+      // onClick: (path) => router.push(path),
     },
     {
       title: 'Enviar Lote',
@@ -51,7 +51,7 @@ export default function TelaInicial() {
       icon: Send,
       color: 'amber',
       path: '',
-      onClick: (path) => router.push(path),
+      // onClick: (path) => router.push(path),
     },
     {
       title: 'Selecionar Empresa',
@@ -59,7 +59,7 @@ export default function TelaInicial() {
       icon: Building,
       color: 'orange',
       path: '',
-      onClick: (path) => router.push(path),
+      // onClick: (path) => router.push(path),
     },
   ]
 

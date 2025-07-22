@@ -30,8 +30,10 @@ export default function MenuItem({
   };
 
   const handleNavigate = (id: string) => {
-    setSelectedItem(id);
-    router.push(id);
+    if (id === "/nota-fiscal/emitir" || id === "/tela-inicial" ) {
+      setSelectedItem(id);
+      router.push(id);
+    }
   }
 
   return (
